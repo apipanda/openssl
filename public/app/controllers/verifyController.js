@@ -19,7 +19,7 @@ app.controller("VerifyController", [
         function init() {
             // body...
             $scope.domainData = $localStorage.domain;
-            console.log($scope.domainData);
+
         }
 
 
