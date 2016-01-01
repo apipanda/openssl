@@ -16,6 +16,10 @@
                 </div>
                 <div class="content">
                     <form data-ng-submit="register()">
+                    <div class="alert alert-danger alert-dismissable" data-ng-show="message">
+                      <button type="button" style="color:#fff" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                      <strong ng-bind="errCode"></strong> <small ng-bind="message"></small>
+                    </div>
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
