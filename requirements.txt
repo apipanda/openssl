@@ -1,0 +1,8 @@
+Django==1.9.3
+django-angular-scaffold==0.12.1
+django-tastypie==0.13.3
+gunicorn==19.4.5
+PyJWT==1.4.0
+python-dateutil==2.5.0
+python-mimeparse==1.5.1
+six==1.10.0
