@@ -1,0 +1,1 @@
+web: gunicorn mapoint.wsgi --log-file -
