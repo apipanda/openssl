@@ -61,7 +61,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.security.SecurityMiddleware',
 )
 
-ROOT_URLCONF = 'mapoint.urls'
+ROOT_URLCONF = 'openssl.urls'
 
 TEMPLATES = [
     {
@@ -79,7 +79,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'mapoint.wsgi.application'
+WSGI_APPLICATION = 'openssl.wsgi.application'
 
 
 # Database
