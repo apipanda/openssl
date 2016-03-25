@@ -1,1 +1,1 @@
-web: gunicorn mapoint.wsgi --log-file -
+web: gunicorn openssl.wsgi --log-file -
