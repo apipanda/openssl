@@ -1,0 +1,17 @@
+# Project Language
+language: python
+python:
+  - "2.7"
+
+# Dependencies Installation
+install:
+  - "pip install -r requirements.txt"
+  - "pip install coveralls"
+
+# Testing
+script:
+  - "coverage run manage.py test"
+
+# Coveralls
+after_success:
+  -"Coveralls"
