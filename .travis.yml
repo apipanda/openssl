@@ -10,3 +10,7 @@ install:
 # Testing
 script:
   - "coverage run manage.py test"
+
+# Coveralls
+after_success:
+  -"Coveralls"
