@@ -45,7 +45,7 @@ THIRD_PARTY_APPS = (
 )
 
 LOCAL_APPS = (
-    'app',
+    'apps.api',
 )
 
 INSTALLED_APPS += THIRD_PARTY_APPS + LOCAL_APPS

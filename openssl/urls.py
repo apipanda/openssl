@@ -17,9 +17,9 @@ from django.conf.urls import include, url
 from django.contrib import admin
 from django.views.generic import TemplateView
 
-from app.api import LocationResource
+from apps.api import api
 
-location_resource = LocationResource()
+location_resource = api.LocationResource()
 
 urlpatterns = [
     url(r'^api/', include(location_resource.urls)),
