@@ -38,6 +38,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'nose',
 )
 
 THIRD_PARTY_APPS = (
@@ -121,3 +122,12 @@ STATICFILES_DIRS = (
 
 TASTYPIE_ALLOW_MISSING_SLASH = True
 TASTYPIE_DEFAULT_FORMATS = ['json']
+
+# Running tests with django-nose
+TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
+
+# Apps for nose coverage
+NOSE_ARGS = [
+    '--with-coverage',
+    '--cover-package=apps.api',
+]
