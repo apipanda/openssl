@@ -184,3 +184,7 @@ def provision(name="", email=""):
                 run("git config --global user.name %s" % name)
                 sudo('mysql_install_db')
                 sudo('/usr/bin/mysql_secure_installation')
+
+                pydev = sudo("sudo apt-get install python-dev")
+                if pydev.succeeded:
+                    sudo("sudo apt-get install libevent-dev")
