@@ -38,15 +38,17 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'nose',
 )
 
 THIRD_PARTY_APPS = (
     'tastypie',
+    'nose',
 )
 
 LOCAL_APPS = (
     'apps.api',
+    'apps.domain',
+    'apps.certificate',
 )
 
 INSTALLED_APPS += THIRD_PARTY_APPS + LOCAL_APPS
@@ -130,4 +132,6 @@ TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
 NOSE_ARGS = [
     '--with-coverage',
     '--cover-package=apps.api',
+    '--cover-package=apps.domain',
+    '--cover-package=apps.certificate',
 ]
