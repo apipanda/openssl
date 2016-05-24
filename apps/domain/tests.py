@@ -1,14 +1,25 @@
 from django.test import TestCase
 from models import Domain
 from ..certificate.models import Certificate
+# from ..certificate.tests import Certificate_Tests
 from datetime import date, timedelta
 import unittest
 
 
 # Create your tests here.
 class Domain_Tests(TestCase):
+    # Certificate_Tests()
 
     def setUp(self):
+        Certificate.objects.create(**{
+            "ssl_certificate": "thisisacertificate",
+            "ssl_key": "thisisakey",
+            "domain": "openssl.io",
+            "date_registered": date.today() + timedelta(days=-10),
+            "expiration_date": date.today() + timedelta(days=10),
+            "last_updated": date.today() + timedelta(days=-5),
+        })
+
         self.mock = {
             "domain_name": "openssl",
             "domain_url": "openssl.io",
@@ -21,9 +32,10 @@ class Domain_Tests(TestCase):
             "last_updated": date.today() - timedelta(days=183),
             "date_entered": date.today(),
         }
+
         Domain.objects.create(
             domain_name=self.mock["domain_name"],
-            domain_url=self.mock["openssl.io"],
+            domain_url=self.mock["domain_url"],
             domain_registerer=self.mock["domain_registerer"],
             support_email=self.mock["support_email"],
             top_level_domain=self.mock["top_level_domain"],
@@ -36,27 +48,20 @@ class Domain_Tests(TestCase):
 
     def test_domain_exists(self):
         domain = Domain.objects.latest('date_entered')
-        self.assertIsInstance(domain, int)
+        self.assertIsInstance(domain.id, int)
 
     def test_domain_name_availability(self):
         domain = Domain.objects.latest('date_entered')
-        name = domain.domain_name
-        self.assertEquals(name, self.mock["domain_name"])
+        self.assertEquals(domain.domain_name, self.mock["domain_name"])
 
     def test_domain_url_specificity(self):
         domain = Domain.objects.latest('date_entered')
-        url = domain.domain_url
-        self.assertEquals(url, self.mock["domain_url"])
+        self.assertEquals(domain.domain_url, self.mock["domain_url"])
 
     def test_support_email_is_an_email(self):
         domain = Domain.objects.latest('date_entered')
         email = domain.support_email
-        mail = False
-        for char in email:
-            if char == "@":
-                mail = True
-            return mail
-        self.assertIs(mail, True)
+        self.assertIn("@", email)
 
     def test_top_level_domain(self):
         domain = Domain.objects.latest('date_entered')
@@ -65,7 +70,8 @@ class Domain_Tests(TestCase):
 
     def domain_to_certificate_relationship(self):
         certificate = Certificate.objects.latest('last_updated')
-        self.assertIsInstance(certificate, int)
+        domain = Domain.objects.latest('date_entered')
+        self.assertEqual(certificate, domain.certificate)
 
     def test_date_registered(self):
         domain = Domain.objects.latest('date_entered')
@@ -74,8 +80,7 @@ class Domain_Tests(TestCase):
 
     def test_expiration(self):
         domain = Domain.objects.latest('date_entered')
-        expiration = domain.expiration_date
-        self.assertEquals(expiration, self.mock["expiration_date"])
+        self.assertEquals(domain.expiration_date, self.mock["expiration_date"])
 
     def test_last_updated(self):
         domain = Domain.objects.latest('date_entered')
@@ -84,16 +89,14 @@ class Domain_Tests(TestCase):
 
     def test_date_entered(self):
         domain = Domain.objects.latest('date_entered')
-        entry = domain
+        entry = domain.date_entered
         self.assertEquals(entry, self.mock["date_entered"])
 
     def test_url_can_be_updated(self):
         domain = Domain.objects.latest('date_entered')
         domain.domain_url = "bernardojengwa.com"
         domain.save()
-        url = domain.domain_url
-        self.assertIsNotNone(domain.objects.latest('date_entered').url)
-        self.assertEquals(url, "bernardojengwa.com")
+        self.assertEquals(domain.domain_url, "bernardojengwa.com")
 
 if __name__ == '__main__':
-    unittest()
+    unittest.main()

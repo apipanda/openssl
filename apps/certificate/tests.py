@@ -67,4 +67,4 @@ class Certificate_Tests(TestCase):
         self.assertEquals(updated, self.mock["last_updated"])
 
 if __name__ == '__main__':
-    unittest()
+    unittest.main()

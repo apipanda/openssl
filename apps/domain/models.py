@@ -21,7 +21,4 @@ class Domain(models.Model):
         pass
 
     def is_expired(self):
-        if self.expiration_date > self.date_registered:
-            return True
-        else:
-            return False
+        return True if self.expiration_date > self.date_registered else False
