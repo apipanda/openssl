@@ -8,7 +8,6 @@ import unittest
 
 # Create your tests here.
 class Domain_Tests(TestCase):
-    # Certificate_Tests()
 
     def setUp(self):
         Certificate.objects.create(**{
