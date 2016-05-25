@@ -1,7 +1,6 @@
 from django.test import TestCase
 from models import Domain
 from ..certificate.models import Certificate
-# from ..certificate.tests import Certificate_Tests
 from datetime import date, timedelta
 import unittest
 
