@@ -40,3 +40,5 @@ node_modules
 *.pem
 *.cert
 *.key
+# Html coverage directory
+htmlcov
