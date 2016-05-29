@@ -43,6 +43,7 @@ INSTALLED_APPS = (
 THIRD_PARTY_APPS = (
     'tastypie',
     'nose',
+    'slack'
 )
 
 LOCAL_APPS = (
