@@ -29,7 +29,7 @@ django-modeltranslation==0.11
 django-newsletter==0.6
 django-nose==1.4.3
 django-request==1.4.0
-django-slack==0.1
+-e git://github.com/prontodev/django-slack.git@f1160cab6dd9de0ad82528f9d1052841982a087d#egg=django_slack-master
 django-social-widgets==0.4.0
 django-storages==1.4.1
 django-tastypie==0.13.3
