@@ -42,3 +42,5 @@ node_modules
 *.key
 # Html coverage directory
 htmlcov
+tmp
+bower_components
