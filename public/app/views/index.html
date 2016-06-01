@@ -1,0 +1,38 @@
+{% load static from staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Sherpany Exercise</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <link rel="stylesheet" href="{% static "styles/paper.css" %}" media="screen">
+    <link rel="stylesheet" href="{% static "styles/site/style.css" %}" media="screen">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="{% static "scripts/shiv.js" %}"></script>
+      <script src="{% static "scripts/respond.js" %}"></script>
+    <![endif]-->
+
+  </head>
+  <body data-ng-app="mapoint" data-ng-cloak>
+
+    <ng-view></ng-view>
+
+    <script src="//apis.google.com/js/client.js?onload=handleClientLoad"></script>
+    <script src="//maps.googleapis.com/maps/api/js?libraries=weather,visualization,geometry&language=en"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular-route.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular-cookies.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.min.js" type="text/javascript"></script>
+    <script src="//cdn.rawgit.com/nmccready/angular-simple-logger/0.0.1/dist/index.js"></script>
+    <script src="{% static "scripts/angular-google-maps.min.js" %}"></script>
+    <script src="{% static "app.js" %}"></script>
+    <script src="{% static "config/constants.js" %}"></script>
+    <script src="{% static "config/csrf.js" %}"></script>
+    <script src="{% static "config/routes.js" %}"></script>
+    <script src="{% static "services/locationService.js" %}"></script>
+    <script src="{% static "services/fusiontableService.js" %}"></script>
+    <script src="{% static "controllers/homeController.js" %}"></script>
+  </body>
+</html>
