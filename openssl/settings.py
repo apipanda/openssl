@@ -119,7 +119,7 @@ if not DEBUG:
     ]
     DATABASES = {
         'default': {
-            'ENGINE': 'tenant_schemas.postgresql_backend',
+            'ENGINE': 'django.db.backends.postgresql',
             'HOST': os.getenv('DB_HOST'),
             'NAME': os.getenv('DB_NAME'),
             'PORT': os.getenv('DB_PORT'),
