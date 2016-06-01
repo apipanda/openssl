@@ -1,0 +1,29 @@
+{
+  "name": "openssl",
+  "homepage": "https://github.com/ojengwa/openssl",
+  "authors": [
+    "Bernard Ojengwa <bernardojengwa@gmail.com>"
+  ],
+  "description": "An open-source distributed certificate signing authority.",
+  "main": "",
+  "moduleType": [
+    "amd",
+    "node"
+  ],
+  "keywords": [
+    "SSL",
+    "SSL",
+    "Certificates"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.5.6"
+  }
+}
