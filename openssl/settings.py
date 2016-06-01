@@ -26,10 +26,22 @@ SECRET_KEY = os.getenv(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('ENV', False)
 
-ALLOWED_HOSTS = []
+INTERNAL_IPS = (
+    '127.0.0.1',
+)
 
-
+HOST = 'openssl.io'
 # Application definition
+
+ADMINS = [
+    ('Bernard', 'bernard@apipanda.com'),
+]
+MANAGERS = [
+    ('Ini', 'ini@apipanda.com'),
+]
+
+DEFAULT_FROM_EMAIL = 'support@openssl.io'
+SERVER_EMAIL = 'support@openssl.io'
 
 INSTALLED_APPS = (
     'django.contrib.admin',
@@ -42,8 +54,15 @@ INSTALLED_APPS = (
 
 THIRD_PARTY_APPS = (
     'tastypie',
+    # 'request',
+
+    # tests
     'nose',
+
+    # logging
     'slack'
+
+
 )
 
 LOCAL_APPS = (
@@ -60,6 +79,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
+    # 'request.middleware.RequestMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
@@ -89,12 +109,38 @@ WSGI_APPLICATION = 'openssl.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+if not DEBUG:
+    DEFAULT_URL_SCHEME = 'https'
+    ALLOWED_HOSTS = [
+        '.openssl.io'
+    ]
+    DATABASES = {
+        'default': {
+            'ENGINE': 'tenant_schemas.postgresql_backend',
+            'HOST': os.getenv('DB_HOST'),
+            'NAME': os.getenv('DB_NAME'),
+            'PORT': os.getenv('DB_PORT'),
+            'USER': os.getenv('DB_USER'),
+            'PASSWORD': os.getenv('DB_PASS')
+        }
     }
-}
+else:
+    DEFAULT_URL_SCHEME = 'http'
+    ALLOWED_HOSTS = ['*']
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        }
+    }
+
+
+LOGIN_URL = '/login'
+LOGIN_REDIRECT_URL = '/dashboard'
+LOGOUT_URL = '/'
+
+SESSION_ENGINE = "django.contrib.sessions.backends.cache"
+SESSION_CACHE_ALIAS = "default"
 
 
 # Internationalization
@@ -116,15 +162,39 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-STATIC_ROOT = 'assets'
+STATIC_ROOT = "assets"
 
 STATICFILES_DIRS = (
-    BASE_DIR + "/assets/lib/",
-    BASE_DIR + "/assets/app",
+    os.path.join(BASE_DIR, "public/lib"),
+    os.path.join(BASE_DIR, "public/app"),
+    os.path.join(BASE_DIR, "bower_components")
 )
+
+FILE_UPLOAD_HANDLERS = (
+    'django.core.files.uploadhandler.MemoryFileUploadHandler',
+    'django.core.files.uploadhandler.TemporaryFileUploadHandler',
+)
+
+# STATICFILES_STORAGE = 'pipeline.storage.PipelineCachedStorage'
+
+# STATICFILES_FINDERS = (
+#     'django.contrib.staticfiles.finders.FileSystemFinder',
+#     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+#     # 'djangobower.finders.BowerFinder',
+#     # 'pipeline.finders.PipelineFinder',
+# )
+
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, "uploads")
+
+# taggit
+TAGGIT_CASE_INSENSITIVE = True
 
 TASTYPIE_ALLOW_MISSING_SLASH = True
 TASTYPIE_DEFAULT_FORMATS = ['json']
+THROTTLE_TIMEOUT = 150
+TASTYPIE_API_VERSION = 'v1'
 
 # Running tests with django-nose
 TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
