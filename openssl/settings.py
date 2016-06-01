@@ -90,7 +90,10 @@ ROOT_URLCONF = 'openssl.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['assets/app/views'],
+        'DIRS': [
+                os.path.join(BASE_DIR, 'public/app/views'),
+                os.path.join(BASE_DIR, 'templates')
+            ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -160,12 +163,12 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = '/assets/'
 
-STATIC_ROOT = "assets"
+STATIC_ROOT = os.path.join(BASE_DIR, "tmp")
 
 STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, "public/lib"),
+    os.path.join(BASE_DIR, "public/libs"),
     os.path.join(BASE_DIR, "public/app"),
     os.path.join(BASE_DIR, "bower_components")
 )
