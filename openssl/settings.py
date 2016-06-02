@@ -126,7 +126,7 @@ if not DEBUG:
             'USER': os.getenv('DB_USER'),
             'PASSWORD': os.getenv('DB_PASS'),
             'TEST': {
-                'ENGINE': 'django.db.backends.sqlite3'
+                'ENGINE': 'django.db.backends.sqlite3',
             }
         }
     }
