@@ -169,8 +169,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, "tmp")
 
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "public/libs"),
-    os.path.join(BASE_DIR, "public/app"),
-    os.path.join(BASE_DIR, "bower_components")
+    os.path.join(BASE_DIR, "public/app")
 )
 
 FILE_UPLOAD_HANDLERS = (
@@ -180,12 +179,12 @@ FILE_UPLOAD_HANDLERS = (
 
 # STATICFILES_STORAGE = 'pipeline.storage.PipelineCachedStorage'
 
-# STATICFILES_FINDERS = (
-#     'django.contrib.staticfiles.finders.FileSystemFinder',
-#     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-#     # 'djangobower.finders.BowerFinder',
-#     # 'pipeline.finders.PipelineFinder',
-# )
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    # 'djangobower.finders.BowerFinder',
+    # 'pipeline.finders.PipelineFinder',
+)
 
 
 MEDIA_URL = '/media/'

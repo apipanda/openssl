@@ -1,5 +1,4 @@
-var app = angular.module("mapoint", [
+var app = angular.module("app", [
     'ngCookies',
     'ngRoute',
-    'uiGmapgoogle-maps'
 ]);
