@@ -15,3 +15,9 @@ script:
 # Coveralls
 after_success:
   Coveralls
+
+# Slack
+notifications:
+  slack: travis encrypt "apipanda:UNJdlVzsjpL85Aw6dys1hZZE" --add notifications.slack
+
+
