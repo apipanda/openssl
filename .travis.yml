@@ -18,6 +18,6 @@ after_success:
 
 # Slack
 notifications:
-  slack: travis encrypt "apipanda:UNJdlVzsjpL85Aw6dys1hZZE" --add notifications.slack
+  slack: apipanda:UNJdlVzsjpL85Aw6dys1hZZE
 
 
