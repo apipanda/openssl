@@ -5,13 +5,13 @@ python:
 
 # Dependencies Installation
 install:
-  - "pip install -r requirements.txt"
-  - "pip install coveralls"
+  - pip install -r requirements.txt
+  - pip install coveralls
 
 # Testing
 script:
-  - "coverage run manage.py test"
+  coverage run manage.py test
 
 # Coveralls
 after_success:
-  -"Coveralls"
+  Coveralls
