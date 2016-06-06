@@ -15,3 +15,7 @@ script:
 # Coveralls
 after_success:
   Coveralls
+
+# Env variables
+env:
+  - ENV=TEST
