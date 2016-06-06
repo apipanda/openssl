@@ -256,7 +256,7 @@ a:focus {
     padding: 100px 0;
     text-align: center;
     color: #fff;
-    background: url('../img/ssl.jpg') no-repeat bottom center scroll;
+    background: url('../images/ssl.jpg') no-repeat bottom center scroll;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     background-size: cover;

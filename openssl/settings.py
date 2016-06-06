@@ -124,10 +124,7 @@ if not DEBUG:
             'NAME': os.getenv('DB_NAME'),
             'PORT': os.getenv('DB_PORT'),
             'USER': os.getenv('DB_USER'),
-            'PASSWORD': os.getenv('DB_PASS'),
-            'TEST': {
-                'ENGINE': 'django.db.backends.sqlite3',
-            }
+            'PASSWORD': os.getenv('DB_PASS')
         }
     }
 else:
