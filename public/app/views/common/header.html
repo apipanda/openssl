@@ -1,0 +1,48 @@
+{% load static from staticfiles %}
+{% block header %}
+      <!--header start-->
+      <nav class="navbar navbar-default header black-bg">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="logo" href="/"><img src="{% static "images/icn.png" %}"></a>
+          </div>
+
+          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav notify-row" id="top_menu">
+              <li class="active"><a href="/hubs"> Hubs</a></li>
+              <li><a href="/pricing">Pricing</a></li>
+              <li><a href="/about">About</a></li>
+            </ul>
+            <div class="top-menu">
+              <ul class="nav pull-right top-menu">
+                  <li>
+                    <div class="btn-group  btn-default logout">
+                      <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown">
+                        <i class="fa fa-bars"></i> Menu <span class="caret"></span>
+                      </a>
+                      <ul data-ng-if="user" class="dropdown-menu pull-left" role="menu">
+                        <li><a href="/dashboard">Dashboard</a></li>
+                        <li class="divider"></li>
+                        <li><a data-ng-click="logout()">Logout</a></li>
+                      </ul>
+                      <ul data-ng-if="!user" class="dropdown-menu pull-left" role="menu">
+                        <li><a href="/signup">Sign Up</a></li>
+                        <li class="divider"></li>
+                        <li><a href="/login">Log in</a></li>
+                      </ul>
+                    </div>
+                  </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </nav>
+      <!--header end-->
+
+{% endblock header %}

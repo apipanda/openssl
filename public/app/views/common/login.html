@@ -1,0 +1,48 @@
+{% load static from staticfiles %}
+
+{% include "common/header.html" %}
+{% include "common/footer.html" %}
+<!--main content start-->
+
+<div id="login-page">
+  <div class="container">
+
+      <form class="form-login">
+        <h2 class="form-login-heading">sign in now</h2>
+        <div class="alert alert-danger alert-dismissable" data-ng-show="message" style="border-radius: 0px">
+          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+          <strong ng-bind="errCode"></strong> <p ng-bind="message"></p>
+        </div>
+        <div class="login-wrap">
+            <input type="email" class="form-control" data-ng-model="vm.email" placeholder="Email" autofocus>
+            <br>
+            <input type="password" class="form-control" data-ng-model="vm.password" placeholder="Password">
+                <br>
+            <button class="btn btn-theme btn-block" href="index.html" type="submit" data-ng-click="login(vm.email, vm.password)"><i class="fa fa-lock"></i> SIGN IN</button>
+                <div class="checkbox">
+                    <span class="pull-right">
+                        <a href="/reset"> Forgot Password?</a>
+                    </span>
+                </div>
+                <br>
+            <hr>
+
+            <div class="login-social-link centered hidden">
+            <p>or you can sign in via</p>
+                <button class="btn btn-github" type="submit"><i class="fa fa-github"></i> Github</button>
+                <button class="btn btn-bitbucket" type="submit"><i class="fa fa-bitbucket"></i> Bitbucket</button>
+            </div>
+            <div class="registration">
+                Don't have an account yet?<br/>
+                <a class="" href="#">
+                    Create an account
+                </a>
+            </div>
+
+        </div>
+
+      </form>
+
+  </div>
+</div>
+<!--main content end-->

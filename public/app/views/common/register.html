@@ -1,0 +1,56 @@
+{% load static from staticfiles %}
+
+{% include "common/header.html" %}
+{% include "common/footer.html" %}
+<!--main content start-->
+
+<div id="login-page">
+  <div class="container">
+
+      <form class="form-login">
+        <h2 class="form-login-heading">New User</h2>
+        <div class="alert alert-danger alert-dismissable" ng-show="message" style="border-radius: 0px">
+          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+          <strong ng-bind="errCode"></strong> <p ng-bind="message"></p>
+        </div>
+        <div class="login-wrap">
+                <input type="text" class="form-control" data-ng-model="data.first_name" placeholder="First Name" required autofocus>
+                <br>
+                <input type="text" class="form-control" data-ng-model="data.last_name" placeholder="Last Name" >
+                <br>
+                <input type="email" class="form-control" data-ng-model="data.email" placeholder="Email" required>
+                <br>
+                <input type="text" class="form-control" data-ng-model="data.org.name" placeholder="Business Name" required>
+                <br>
+                <input type="url" class="form-control" data-ng-model="data.org.url" value="http://" placeholder="Organisation's Website" required>
+                <br>
+                <input type="password" class="form-control" data-ng-model="data.password" placeholder="Password" required>
+                <br>
+            <div class="checkbox">
+                <small class="pull-left">By signing up, you accept our<a href="/legal"> terms and conditions</a>.
+                </small>
+            </div>
+            <button class="btn btn-theme btn-block" data-ng-click="register()" type="submit"><i class="fa fa-lock"></i> SIGN UP</button>
+            <hr>
+
+            <div class="login-social-link centered hidden">
+            <p>or you can sign in via</p>
+                <button class="btn btn-github" type="submit"><i class="fa fa-github"></i> Github</button>
+                <button class="btn btn-bitbucket" type="submit"><i class="fa fa-bitbucket"></i> Bitbucket</button>
+            </div>
+
+            <div class="registration">
+                Have an account yet?<br/>
+                <a class="" href="/login">
+                    Login
+                </a>
+            </div>
+
+        </div>
+
+      </form>
+
+  </div>
+</div>
+
+<!--main content end-->

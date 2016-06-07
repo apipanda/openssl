@@ -1,0 +1,35 @@
+{% load static from staticfiles %}
+
+{% include "common/header.html" %}
+{% include "common/footer.html" %}
+<!--main content start-->
+
+<div id="login-page">
+  <div class="container">
+
+      <div class="modal-dialog form-login">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <a href="/"><button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-home"></i></button> </a>
+                  <h4 class="modal-title">Forgot Password ?</h4>
+              </div>
+              <div class="alert alert-danger alert-dismissable" ng-show="message" style="border-radius: 0px">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <strong ng-bind="errCode"></strong> <p ng-bind="message"></p>
+              </div>
+              <div class="modal-body">
+                  <p>Enter your e-mail address below to reset your password.</p>
+                  <input type="text" name="email" placeholder="Email" autocomplete="off" class="form-control placeholder-no-fix">
+
+              </div>
+              <div class="modal-footer">
+                  <button data-dismiss="modal" class="btn btn-default" type="button">Cancel</button>
+                  <button class="btn btn-theme" type="button">Submit</button>
+              </div>
+          </div>
+      </div>
+
+  </div>
+</div>
+
+<!--main content end-->
