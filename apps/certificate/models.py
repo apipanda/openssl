@@ -8,6 +8,6 @@ class Certificate(models.Model):
     ssl_certificate = models.CharField(max_length=200)
     ssl_key = models.CharField(max_length=200)
     domain = models.CharField(max_length=200)
-    date_registered = models.DateField()
+    date_registered = models.DateField(auto_now=True)
     expiration_date = models.DateField()
-    last_updated = models.DateField()
+    last_updated = models.DateField(auto_now_add=True)

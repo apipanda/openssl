@@ -16,13 +16,22 @@ Including another URLconf
 from django.conf.urls import include, url
 from django.contrib import admin
 from django.views.generic import TemplateView
+from django.conf import settings
 
-from apps.api import api
+from tastypie.api import Api
 
-location_resource = api.LocationResource()
+from apps.api import resource
 
-urlpatterns = [
-    url(r'^api/', include(location_resource.urls)),
+api = Api(api_name=settings.TASTYPIE_API_VERSION)
+
+api.register(resource.UserResource())
+api.register(resource.DomainResource())
+api.register(resource.CertificateResource())
+
+
+urlpatterns = (
+    url(r'^api/', include(api.urls)),
+
     url(r'^app/', TemplateView.as_view(template_name='map.html')),
     url(r'^$', TemplateView.as_view(template_name='index.html')),
-]
+)
