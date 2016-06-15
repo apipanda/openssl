@@ -1,9 +1,9 @@
-app.controller("HomeController", [
+app.controller("HubController", [
     "$scope",
     "$location",
     "$log",
     function ($scope, $location, $log) {
         'use strict';
 
-        $log.debug("Home Controller Initialized");
+        $log.debug("Hub Controller Initialized");
     }]);

@@ -1,9 +1,9 @@
-app.controller("HomeController", [
+app.controller("PluginController", [
     "$scope",
     "$location",
     "$log",
     function ($scope, $location, $log) {
         'use strict';
 
-        $log.debug("Home Controller Initialized");
+        $log.debug("Plugins Controller Initialized");
     }]);

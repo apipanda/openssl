@@ -1,9 +1,9 @@
-app.controller("HomeController", [
+app.controller("OrgController", [
     "$scope",
     "$location",
     "$log",
     function ($scope, $location, $log) {
         'use strict';
 
-        $log.debug("Home Controller Initialized");
+        $log.debug("Org Controller Initialized");
     }]);
