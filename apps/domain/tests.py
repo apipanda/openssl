@@ -1,15 +1,24 @@
-from django.test import TestCase
-from models import Domain
-from ..certificate.models import Certificate
-from datetime import date, timedelta
+from __future__ import absolute_import
+
 import unittest
+from datetime import date, timedelta
+
+from django.test import TestCase
+
+from apps.domain.models import Domain
+from apps.certificate.models import Certificate
+
+from tests.fixtures.factories import (
+    UserFactory, DomainFactory, CertificateFactory)
 
 
-# Create your tests here.
 class Domain_Tests(TestCase):
 
     def setUp(self):
-        Certificate.objects.create(**{
+
+        self.user = UserFactory()
+
+        self.certificate = CertificateFactory(**{
             "ssl_certificate": "thisisacertificate",
             "ssl_key": "thisisakey",
             "domain": "openssl.io",
@@ -23,30 +32,27 @@ class Domain_Tests(TestCase):
             "domain_url": "openssl.io",
             "domain_registerer": "Bernard Ojengwa",
             "support_email": "bernardojengwa@gmail.com",
-            "top_level_domain": "google.com",
-            "domain_certificate": Certificate.objects.latest('last_updated'),
-            "date_registered": date(2016, 1, 1),
+            "tld": ".com",
+            "domain_certificate": self.certificate,
             "expiration_date": date(2017, 1, 1),
-            "last_updated": date.today() - timedelta(days=183),
+            "last_updated": date.today(),
             "date_entered": date.today(),
+            "admin": self.user
         }
 
-        Domain.objects.create(
+        self.domain = DomainFactory(
             domain_name=self.mock["domain_name"],
             domain_url=self.mock["domain_url"],
             domain_registerer=self.mock["domain_registerer"],
             support_email=self.mock["support_email"],
-            top_level_domain=self.mock["top_level_domain"],
+            tld=self.mock["tld"],
             domain_certificate=self.mock["domain_certificate"],
-            date_registered=self.mock["date_registered"],
             expiration_date=self.mock["expiration_date"],
             last_updated=self.mock["last_updated"],
-            date_entered=self.mock["date_entered"],
-        )
+            date_entered=self.mock["date_entered"],)
 
     def test_domain_exists(self):
-        domain = Domain.objects.latest('date_entered')
-        self.assertIsInstance(domain.id, int)
+        self.assertIsInstance(self.domain.id, int)
 
     def test_domain_name_availability(self):
         domain = Domain.objects.latest('date_entered')
@@ -61,10 +67,10 @@ class Domain_Tests(TestCase):
         email = domain.support_email
         self.assertIn("@", email)
 
-    def test_top_level_domain(self):
+    def test_tld(self):
         domain = Domain.objects.latest('date_entered')
-        tld = domain.top_level_domain
-        self.assertEquals(tld, self.mock["top_level_domain"])
+        tld = domain.tld
+        self.assertEquals(tld, self.mock["tld"])
 
     def domain_to_certificate_relationship(self):
         certificate = Certificate.objects.latest('last_updated')
@@ -72,9 +78,8 @@ class Domain_Tests(TestCase):
         self.assertEqual(certificate, domain.certificate)
 
     def test_date_registered(self):
-        domain = Domain.objects.latest('date_entered')
-        registered = domain.date_registered
-        self.assertEquals(registered, self.mock["date_registered"])
+        registered = self.domain.date_registered
+        self.assertEquals(registered, self.domain.date_registered)
 
     def test_expiration(self):
         domain = Domain.objects.latest('date_entered')
