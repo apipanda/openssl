@@ -31,7 +31,7 @@ api.register(resource.CertificateResource())
 
 urlpatterns = (
     url(r'^api/', include(api.urls)),
-
+    url(r'^admin/', include(admin.site.urls)),
     url(r'^app/', TemplateView.as_view(template_name='map.html')),
     url(r'^$', TemplateView.as_view(template_name='index.html')),
 )
