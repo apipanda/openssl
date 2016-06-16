@@ -12,15 +12,15 @@ class Certificate_Tests(TestCase):
             "ssl_certificate": "thisisacertificate",
             "ssl_key": "thisisakey",
             "domain": "openssl.io",
-            "date_registered": date.today() + timedelta(days=-10),
+            "date_registered": date.today(),
             "expiration_date": date.today() + timedelta(days=10),
-            "last_updated": date.today() + timedelta(days=-5),
+            "last_updated": date.today(),
         }
         Certificate.objects.create(
             ssl_certificate=self.mock["ssl_certificate"],
             ssl_key=self.mock["ssl_key"],
             domain=self.mock["domain"],
-            date_registered=self.mock["date_registered"],
+            date_registered=date.today(),
             expiration_date=self.mock["expiration_date"],
             last_updated=self.mock["last_updated"],
         )
