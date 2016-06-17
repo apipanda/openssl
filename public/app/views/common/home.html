@@ -1,63 +1,69 @@
 {% load static from staticfiles %}
+{% extends "common/base.html" %}
+    <!-- Intro Header -->
+    <header class="intro">
+        <div class="intro-body">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2">
+                        <p class="intro-text">Get Free, unlimited SSL certificates for your website, instantly!</p>
+                        <div class="input-group">
+                            <input type="text" class="form-control search" placeholder="Enter your domain name (eg: apipanda.com)">
+                            <span class="input-group-btn">
+                              <button class="btn btn-primary search" type="button">Get Started</button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
 
-{% include "common/header.html" %}
-{% include "common/footer.html" %}
-<!--main content start-->
-<section class="main-content">
-    <section class="wrapper site-min-height">
-      <div class="row mt">
-        <div class="container">
-          <div class="col-lg-12">
-            <div class="jumbotron text-center">
-                <h2><b class='text-primary'>Apipanda</b> is a fast, secure and scalable developers hub for managing and extending API/Microservice platforms; featuring an API gateway, analytics/business intelligence, sandboxes, developer portal and more.</h2>
-              </div>
-            </div>
-            <div class="form-group col-lg-6 col-lg-offset-3">
-              <div class="input-group">
-                <input type="text" class="form-control search" placeholder="Explore hubs...">
-                <span class="input-group-btn">
-                  <button class="btn btn-primary search" type="button">Explore</button>
-                </span>
-              </div>
-            </div>
-        </div>
-      </div>
-      <div class="row mt">
-        <div class="onboarding col-lg-10 col-lg-offset-1">
-        <div class="welcome-text">
-            <h5 class="text-center text-uppercase text-primary font-bold m-b-sm ng-hide" >While you wait to go live</h5>
-            <h5 class="text-center text-uppercase font-bold m-b-sm ng-binding">Or  use Paystack in test mode</h5>
-        </div>
+    <!-- About Section -->
+    <section id="about" class="container content-section">
         <div class="row">
-            <div class="col-xs-4 b-r">
-                <span ng-show="waiting_for_live || account.is_live" class="sprite sprite-paystack_pages ng-hide"></span>
-                <h4 class="font-bold m-t-sm">Payment Pages</h4>
-                <p>Send your customers a payment link and they’ll be able to pay you using their debit/credit cards. No programming required</p>
-                <!-- <a class="text-primary font-bold"><i class="fa fa-plus m-r-xs"></i> Create a page</a> -->
-                <a ui-sref="app.pages.list({create: true})" class="text-primary font-bold" href="#/pages?create=true"><i class="fa fa-plus-square-o m-r-xs"></i> Create a page</a>
-            </div>
-            <div class="col-xs-4 b-r">
-                <span ng-show="waiting_for_live || account.is_live" class="sprite sprite-paystack_standard ng-hide"></span>
-                <h4 class="font-bold m-t-sm">Paystack APIs</h4>
-                <p>You can integrate with few lines of code. Our REST API and Client libraries give you all the flexibility you need</p>
-                <a target="_blank" href="https://developers.paystack.co/docs" class="text-primary font-bold"><i class="fa fa-file-text-o m-r-xs"></i> Documentation</a>
-            </div>
-            <div class="col-xs-4">
-                <span ng-show="waiting_for_live || account.is_live" class="sprite sprite-paystack_inline ng-hide"></span>
-                <h4 class="font-bold m-t-sm">E-Commerce Plugins</h4>
-                <p>Use Paystack with your favourite shopping cart software. Plugins are currently available on Woocommerce and Shopify</p>
-                <a target="_blank" href="https://developers.paystack.co/docs/libraries-and-plugins" class="text-primary font-bold"><i class="fa fa-database m-r-xs"></i> See Plugins</a>
-            </div>
-            <div class="onboarding-action">
-                <a class="text-primary" ui-sref="app.settings.users({invite: true})" href="#/settings/users?invite=true">Invite your developer</a> or <a class="text-primary" href="mailto:hello@paystack.co">contact us</a> if you need help getting started with Paystack.
+            <div class="col-lg-8 col-lg-offset-2">
+                <h2 class="text-center">About Openssl.io</h2>
+                <p><a href="https://github.com/apipanda/openssl" target="_blank"><code>OpenSSL.io</code></a> is a <a href="http://www.freeopensourcesoftware.org/index.php" target="_blank"><code>free and open source</code></a> <a href="https://letsencrypt.github.io/acme-spec/" target="_blank"><code>ACME Protocol</code></a> client for generating <strong>trusted</strong> <a href="https://en.wikipedia.org/wiki/Public_key_infrastructure" target="_blank"><code>WEB PKI Certificates</code></a> using the <a href="https://letsencrypt.org/" target="_blank"><code>Let's Encrypt certificate authority</code></a>. <a href="https://letsencrypt.org/about/" target="_blank"><code>Let’s Encrypt</code></a> is a free, automated, and open certificate authority (CA), run for the public’s benefit. </p>
+
+                <p><a href="https://letsencrypt.org/" target="_blank"><code>Let's Encrypt</code></a> is <strong>FREE:</strong> Anyone who owns a domain name can use Let’s Encrypt to obtain a trusted certificate at zero cost.</p>
+
+                <p><a href="https://letsencrypt.org/" target="_blank"><code>Let's Encrypt</code></a> is <strong>SECURE:</strong> Let’s Encrypt will serve as a platform for advancing TLS security best practices, both on the CA side and by helping site operators properly secure their servers.</p>
+
+                <p><a href="https://letsencrypt.org/" target="_blank"><code>Let's Encrypt</code></a> is <strong>TRANSPERANT:</strong> All certificates issued or revoked will be publicly recorded and available for anyone to inspect.</p>
+
+                <p><a href="https://letsencrypt.org/" target="_blank"><code>Let's Encrypt</code></a> is <strong>OPEN:</strong> The automatic issuance and renewal protocol will be published as an open standard that others can adopt.</p>
+
+                <p><a href="https://letsencrypt.org/" target="_blank"><code>Let's Encrypt</code></a> is <strong>COOPERATIVE:</strong> Much like the underlying Internet protocols themselves, Let’s Encrypt is a joint effort to benefit the community, beyond the control of any one organization.</p>
+
+                <p><strong>AUTO-RENEWAL:</strong> Your SSL certificates are auto-renewed for you so you don't have to worry about contantly keeping your <code>certificate</code>.</p>
+
+                <p><strong>MULTI-DOMAIN SETUP:</strong> We do not have any restrictions on the number of sub-domains to add.</p>
+
+                <p class="footer text-center"><code>Openssl.io</code> is <strong>NOT</strong> an affiliate of the <a href="https://www.openssl.org/" target="_blank" class="text-danger">OpenSSL Project</a>.</p>
             </div>
         </div>
-    </div>
-      </div>
-  </section><!--/wrapper -->
-</section><!-- /MAIN CONTENT -->
+    </section>
 
-<!--main content end-->
+    <!-- Download Section -->
+    <section id="download" class="content-section text-center">
+        <div class="download-section">
+            <h2>Our Sponsors</h2>
+        </div>
+    </section>
+
+    <!-- Download Section -->
+    <section id="download" class="content-section text-center">
+        <div class="about-section">
+            <div class="container">
+                <div class="col-lg-8 col-lg-offset-2">
+
+                </div>
+            </div>
+        </div>
+    </section>
+    <hr class="divider">
+
 {% block local_js %}
   <script type="text/javascript">
     mixpanel.track("Pageload: Home");
