@@ -1,5 +1,7 @@
-{% load static from staticfiles %}
 {% extends "common/base.html" %}
+{% load static from staticfiles %}
+{% block page %}
+
     <!-- Intro Header -->
     <header class="intro">
         <div class="intro-body">
@@ -64,6 +66,7 @@
     </section>
     <hr class="divider">
 
+{% endblock page %}
 {% block local_js %}
   <script type="text/javascript">
     mixpanel.track("Pageload: Home");
