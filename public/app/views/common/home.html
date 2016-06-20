@@ -68,8 +68,8 @@
 
 {% endblock page %}
 {% block local_js %}
+  {{ block.super }}
   <script type="text/javascript">
     mixpanel.track("Pageload: Home");
-    mixpanel.track("Pageload");
   </script>
 {% endblock local_js %}
