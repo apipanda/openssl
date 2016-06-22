@@ -21,7 +21,9 @@ ALLOWED_HOSTS = (
     '.openssl.io',
 )
 
-THIRD_PARTY_APPS = ('',)
+THIRD_PARTY_APPS = (
+    'storages',
+)
 
 INSTALLED_APPS += THIRD_PARTY_APPS + COMMON_APPS
 
@@ -88,3 +90,5 @@ STATICFILES_FINDERS = (
     # 'djangobower.finders.BowerFinder',
     # 'pipeline.finders.PipelineFinder',
 )
+DEFAULT_FILE_STORAGE = 'libs.storages.S3Storage.S3Storage'
+STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
