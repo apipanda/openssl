@@ -97,7 +97,7 @@ def instance():
 
 def deploy():
     """
-    Pulls the latest commit from bitbucket, resyncs the database, collects the static files and restarts the
+    Pulls the latest commit from your remote repo, resyncs the database, collects the static files and restarts the
     server.
     """
     _run_task(tasks.deploy, "Updating server to latest commit in the bitbucket repo...",
@@ -190,7 +190,7 @@ def _create_ec2_instance():
     print(_yellow("Creating instance"))
     conn = boto.ec2.connect_to_region(ec2_region, aws_access_key_id=fabconf[
                                       'AWS_ACCESS_KEY'], aws_secret_access_key=fabconf['AWS_SECRET_KEY'])
-
+    print(conn)
     image = conn.get_all_images(ec2_amis)
 
     reservation = image[0].run(1, 1, ec2_keypair, ec2_secgroups,
