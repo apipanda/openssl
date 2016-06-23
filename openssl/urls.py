@@ -36,3 +36,19 @@ urlpatterns = (
     url(r'^home/', TemplateView.as_view(template_name='common/home.html')),
     url(r'^$', TemplateView.as_view(template_name='index.html')),
 )
+
+
+def handler500(request):
+    """
+    500 error handler which includes ``request`` in the context.
+
+    Templates: `500.html`
+    Context: None
+    """
+    from django.template import Context, loader
+    from django.http import HttpResponseServerError
+
+    template = loader.get_template('error/500.html')
+    return HttpResponseServerError(template.render(Context({
+        'request': request,
+    })))
