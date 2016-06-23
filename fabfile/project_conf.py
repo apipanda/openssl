@@ -13,7 +13,7 @@ Make sure you fill everything out that looks like it needs to be filled out, the
 in the comments to help.
 '''
 
-import os.path
+import os
 
 fabconf = {}
 
@@ -79,10 +79,10 @@ fabconf['ACTIVATE'] = "source /home/%s/.virtualenvs/%s/bin/activate" % (
 fabconf['INSTANCE_NAME_TAG'] = "Openssl"
 
 # EC2 key. http://bit.ly/j5ImEZ
-fabconf['AWS_ACCESS_KEY'] = 'AKIAIE7OXOQA734VWA3A'
+fabconf['AWS_ACCESS_KEY'] = os.getenv('AWS_ACCESS_KEY')
 
 # EC2 secret. http://bit.ly/j5ImEZ
-fabconf['AWS_SECRET_KEY'] = 'UqrB6Gf8sev6N0dojpf/PYgbSpw3MQGAvvQoFBKp'
+fabconf['AWS_SECRET_KEY'] = os.getenv('AWS_SECRET_KEY')
 
 # EC2 region. http://amzn.to/12jBkm7
 ec2_region = 'us-east-1d'
