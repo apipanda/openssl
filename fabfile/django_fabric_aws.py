@@ -190,7 +190,6 @@ def _create_ec2_instance():
     print(_yellow("Creating instance"))
     conn = boto.ec2.connect_to_region(ec2_region, aws_access_key_id=fabconf[
                                       'AWS_ACCESS_KEY'], aws_secret_access_key=fabconf['AWS_SECRET_KEY'])
-    print(conn)
     image = conn.get_all_images(ec2_amis)
 
     reservation = image[0].run(1, 1, ec2_keypair, ec2_secgroups,
@@ -198,7 +197,7 @@ def _create_ec2_instance():
 
     instance = reservation.instances[0]
     conn.create_tags([instance.id], {"Name": fabconf['INSTANCE_NAME_TAG']})
-
+    print(instance, image, vars(image))
     while instance.state == u'pending':
         print(_yellow("Instance state: %s" % instance.state))
         time.sleep(10)
