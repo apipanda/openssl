@@ -21,6 +21,7 @@ from django.conf import settings
 from tastypie.api import Api
 
 from apps.api import resource
+from apps.api import views
 
 api = Api(api_name=settings.TASTYPIE_API_VERSION)
 
@@ -33,7 +34,27 @@ urlpatterns = (
     url(r'^api/', include(api.urls)),
     url(r'^admin/', include(admin.site.urls)),
 
-    url(r'^home/', TemplateView.as_view(template_name='common/home.html')),
+    # Common views
+    url(r'^home$', TemplateView.as_view(template_name='common/home.html')),
+    url(r'^verififaction$', TemplateView.as_view(
+        template_name='common/verify.html')),
+    url(r'^join$', TemplateView.as_view(template_name='common/register.html')),
+    url(r'^signin$', TemplateView.as_view(template_name='common/login.html')),
+    url(r'^certificate$', TemplateView.as_view(
+        template_name='common/cert.html')),
+    url(r'^reset$', TemplateView.as_view(
+        template_name='common/reset.html')),
+    url(r'^guide$', TemplateView.as_view(template_name='common/guide.html')),
+
+    # Logged-in user
+    url(r'^dashboard$', views.DashboardView.as_view()),
+    url(r'^domains$', views.DomainsView.as_view()),
+    url(r'^profile$', views.ProfileView.as_view()),
+    url(r'^notification$', views.NotificationsView.as_view()),
+    url(r'^stats$', views.LogsView.as_view()),
+
+    # url(r'^blog', )
+
     url(r'^$', TemplateView.as_view(template_name='index.html')),
 )
 
