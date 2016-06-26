@@ -36,7 +36,7 @@ urlpatterns = (
 
     # Common views
     url(r'^home$', TemplateView.as_view(template_name='common/home.html')),
-    url(r'^verififaction$', TemplateView.as_view(
+    url(r'^verification$', TemplateView.as_view(
         template_name='common/verify.html')),
     url(r'^join$', TemplateView.as_view(template_name='common/register.html')),
     url(r'^signin$', TemplateView.as_view(template_name='common/login.html')),
@@ -55,7 +55,9 @@ urlpatterns = (
 
     # url(r'^blog', )
 
+    # Catch all
     url(r'^$', TemplateView.as_view(template_name='index.html')),
+    url(r'^', TemplateView.as_view(template_name='index.html')),
 )
 
 
