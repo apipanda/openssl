@@ -5,7 +5,7 @@ app.config(["$routeProvider", '$locationProvider', function ($routeProvider, $lo
     $routeProvider.when('/', {
         controller: 'HomeController',
         controllerAs: 'vm',
-        templateUrl: '../home/'
+        templateUrl: '../home'
     })
         // .when('/hubs', {
         //     controller: 'HubsController',
