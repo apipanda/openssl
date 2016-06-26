@@ -32,10 +32,6 @@ app.config(['$routeProvider', function ($routeProvider) {
   $httpProvider.defaults.headers.common['Authorization'] = "ApiKey " + API_USER + ":" + API_KEY;
 }])
 
-.config(['cfpLoadingBarProvider', function(cfpLoadingBarProvider) {
-    cfpLoadingBarProvider.includeSpinner = false;
-  }])
-
 /**
 * Apply some route security. Any route's resolve method can reject the promise with
 * { authRequired: true } to force a redirect. This method enforces that and also watches
