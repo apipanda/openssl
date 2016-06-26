@@ -1,5 +1,9 @@
 var app = angular.module("app", [
     'ngCookies',
+    'ngAnimate',
     'ngRoute',
-    'ngStorage'
+    'ajoslin.promise-tracker',
+    'ngStorage',
+    'ui.bootstrap',
+    'angular-loading-bar'
 ]);
