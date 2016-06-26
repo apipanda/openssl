@@ -89,7 +89,7 @@ configure_instance = [
     {"action": "run",
         "params": """echo 'IdentityFile /home/%(SERVER_USERNAME)s/.ssh/%(BITBUCKET_DEPLOY_KEY_NAME)s' >> /home/%(SERVER_USERNAME)s/.ssh/config"""},
     {"action": "run",
-        "params": "ssh-keyscan bitbucket.org >> /home/%(SERVER_USERNAME)s/.ssh/known_hosts"},
+        "params": "ssh-keyscan github.com >> /home/%(SERVER_USERNAME)s/.ssh/known_hosts"},
 
     # Create virtualevn
     {"action": "run", "params": "mkvirtualenv --no-site-packages %(PROJECT_NAME)s",
