@@ -21,21 +21,23 @@ fabconf = {}
 fabconf['FAB_CONFIG_PATH'] = os.path.dirname(__file__)
 
 # Project name
-fabconf['PROJECT_NAME'] = "openssl_app"
+fabconf['PROJECT_NAME'] = "openssl_io"
 
 # Username for connecting to EC2 instaces - Do not edit unless you have a
 # reason to
 fabconf['SERVER_USERNAME'] = "ubuntu"
 
 # Full local path for .ssh
-fabconf['SSH_PATH'] = "~/.ssh"
+fabconf['SSH_PATH'] = '~/.ssh'
+
+fabconf['BASE_PATH'] = os.getenv('PROJECT_HOME') + '/openssl'
 
 # Name of the private key file you use to connect to EC2 instances
-fabconf['EC2_KEY_NAME'] = "id_rsa.pub"
+fabconf['EC2_KEY_NAME'] = "openssl.pem"
 
 # Don't edit. Full path of the ssh key you use to connect to EC2 instances
 fabconf[
-    'SSH_PRIVATE_KEY_PATH'] = '%s/%s' % (fabconf['SSH_PATH'], fabconf['EC2_KEY_NAME'])
+    'SSH_PRIVATE_KEY_PATH'] = '%s/%s' % (fabconf['BASE_PATH'], fabconf['EC2_KEY_NAME'])
 
 # Where to install apps
 fabconf['APPS_DIR'] = "/home/%s/webapps" % fabconf['SERVER_USERNAME']
@@ -45,7 +47,7 @@ fabconf[
     'PROJECT_PATH'] = "%s/%s" % (fabconf['APPS_DIR'], fabconf['PROJECT_NAME'])
 
 # App domains
-fabconf['DOMAINS'] = "openssl.io www.openssl.io"
+fabconf['DOMAINS'] = "openssl.io"
 
 # Path for virtualenvs
 fabconf['VIRTUALENV_DIR'] = "/home/%s/.virtualenvs" % fabconf['SERVER_USERNAME']
@@ -54,7 +56,7 @@ fabconf['VIRTUALENV_DIR'] = "/home/%s/.virtualenvs" % fabconf['SERVER_USERNAME']
 fabconf['ADMIN_EMAIL'] = "support@apipanda.com"
 
 # Git username for the server
-fabconf['GIT_USERNAME'] = "bernard"
+fabconf['GIT_USERNAME'] = "ojengwa"
 
 # Name of the private key file used for github deployments
 fabconf['BITBUCKET_DEPLOY_KEY_NAME'] = "id_rsa.pub"
@@ -64,11 +66,11 @@ fabconf['BITBUCKET_DEPLOY_KEY_PATH'] = "%s/%s" % (
     fabconf['SSH_PATH'], fabconf['BITBUCKET_DEPLOY_KEY_NAME'])
 
 # Path to the repo of the application you want to install
-fabconf['BITBUCKET_USERNAME'] = 'ojengwa'
+fabconf['BITBUCKET_USERNAME'] = 'apipanda'
 fabconf['BITBUCKET_REPO_NAME'] = 'openssl'
 
 # Creates the ssh location of your bitbucket repo from the above details
-fabconf['BITBUCKET_REPO'] = "ssh://git@bitbucket.org/%s/%s.git" % (
+fabconf['BITBUCKET_REPO'] = "ssh://git@github.com/%s/%s.git" % (
     fabconf['BITBUCKET_USERNAME'], fabconf['BITBUCKET_REPO_NAME'])
 
 # Virtualenv activate command
@@ -76,7 +78,7 @@ fabconf['ACTIVATE'] = "source /home/%s/.virtualenvs/%s/bin/activate" % (
     fabconf['SERVER_USERNAME'], fabconf['PROJECT_NAME'])
 
 # Name tag for your server instance on EC2
-fabconf['INSTANCE_NAME_TAG'] = "Openssl"
+fabconf['INSTANCE_NAME_TAG'] = "openssl_io"
 
 # EC2 key. http://bit.ly/j5ImEZ
 fabconf['AWS_ACCESS_KEY'] = os.getenv('AWS_ACCESS_KEY')
@@ -85,10 +87,10 @@ fabconf['AWS_ACCESS_KEY'] = os.getenv('AWS_ACCESS_KEY')
 fabconf['AWS_SECRET_KEY'] = os.getenv('AWS_SECRET_KEY')
 
 # EC2 region. http://amzn.to/12jBkm7
-ec2_region = 'us-east-1d'
+ec2_region = 'us-east-1'
 
 # AMI name. http://bit.ly/liLKxj
-ec2_amis = ['ami-openssl']
+ec2_amis = ['ami-fce3c696']
 
 # Name of the keypair you use in EC2. http://bit.ly/ldw0HZ
 ec2_keypair = 'openssl'
@@ -101,6 +103,4 @@ ec2_instancetype = 't2.micro'
 
 # Existing instances - add the public dns of your instances here when you
 # have spawned them
-fabconf['EC2_INSTANCES'] = [
-    "ec2-107-23-67-90.compute-1.amazonaws.com",
-]
+fabconf['EC2_INSTANCES'] = [""]
