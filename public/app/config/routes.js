@@ -2,31 +2,31 @@ app.config(["$routeProvider", '$locationProvider', function ($routeProvider, $lo
     "use strict";
     $locationProvider.html5Mode(true);
 
-    $routeProvider.when('/', {
+    $routeProvider.when('/start', {
         controller: 'HomeController',
         controllerAs: 'vm',
-        templateUrl: '../home'
+        templateUrl: '/home'
     })
-        // .when('/hubs', {
-        //     controller: 'HubsController',
-        //     controllerAs: 'vm',
-        //     templateUrl: '../hubs/'
-        // })
-        // .when('/login', {
-        //     controller: 'LoginController',
-        //     controllerAs: 'vm',
-        //     templateUrl: '../login/'
-        // })
+        .when('/verify', {
+            controller: 'verifyController',
+            controllerAs: 'vm',
+            templateUrl: '/verification'
+        })
+        .when('/login', {
+            controller: 'LoginController',
+            controllerAs: 'vm',
+            templateUrl: '/signin'
+        })
         // .when('/signup', {
         //     controller: 'RegisterController',
         //     controllerAs: 'vm',
         //     templateUrl: '../register/'
         // })
-        // .when('/reset', {
-        //     controller: 'ResetController',
-        //     controllerAs: 'vm',
-        //     templateUrl: '../reset/'
-        // })
+        .when('/recover', {
+            controller: 'ResetController',
+            controllerAs: 'vm',
+            templateUrl: '/reset'
+        })
 
         // .whenAuthenticated('/switcher', {
         //     controller: 'SwitchController',
@@ -70,7 +70,7 @@ app.config(["$routeProvider", '$locationProvider', function ($routeProvider, $lo
         //     templateUrl: '../profile/'
         // })
 
-        .otherwise({redirectTo: '/'});
+        .otherwise({redirectTo: '/start'});
 }])
     .config(['$httpProvider', function ($httpProvider) {
         "use strict";
@@ -81,6 +81,9 @@ app.config(["$routeProvider", '$locationProvider', function ($routeProvider, $lo
         $interpolateProvider.startSymbol('{$');
         $interpolateProvider.endSymbol('$}');
     }])
+    .config(['cfpLoadingBarProvider', function(cfpLoadingBarProvider) {
+        cfpLoadingBarProvider.includeSpinner = true;
+      }])
     .config(['$localStorageProvider', function ($localStorageProvider) {
         "use strict";
         $localStorageProvider.setKeyPrefix('pandassl');
