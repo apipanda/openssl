@@ -12,6 +12,9 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 from openssl.config import *
+import dotenv
+
+dotenv.load_dotenv(os.path.join(BASE_DIR, '.env'))
 
 SITE_ID = 1
 
@@ -99,3 +102,7 @@ TASTYPIE_ALLOW_MISSING_SLASH = True
 TASTYPIE_DEFAULT_FORMATS = ['json']
 THROTTLE_TIMEOUT = 150
 TASTYPIE_API_VERSION = 'v1'
+
+
+# Twitter
+TWITTER_USERNAME = 'openssl_io'
