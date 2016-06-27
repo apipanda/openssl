@@ -33,6 +33,7 @@ api.register(resource.CertificateResource())
 urlpatterns = (
     url(r'^api/', include(api.urls)),
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^post/', include('pinax.blog.urls', namespace='pinax_blog')),
 
     # Common views
     url(r'^home$', TemplateView.as_view(template_name='common/home.html')),
@@ -44,12 +45,13 @@ urlpatterns = (
         template_name='common/cert.html')),
     url(r'^reset$', TemplateView.as_view(
         template_name='common/reset.html')),
-    url(r'^guide$', TemplateView.as_view(template_name='common/guide.html')),
+    url(r'^guides$', TemplateView.as_view(template_name='common/guide.html')),
 
     # Logged-in user
-    url(r'^dashboard$', views.DashboardView.as_view()),
-    url(r'^domains$', views.DomainsView.as_view()),
-    url(r'^profile$', views.ProfileView.as_view()),
+    url(r'^dashy$', views.DashboardView.as_view()),
+    url(r'^domain$', views.DomainsView.as_view()),
+    url(r'^edit$', views.EditView.as_view()),
+    url(r'^user$', views.ProfileView.as_view()),
     url(r'^notification$', views.NotificationsView.as_view()),
     url(r'^stats$', views.LogsView.as_view()),
 
@@ -62,6 +64,22 @@ urlpatterns = (
 
 
 def handler500(request):
+    """
+    500 error handler which includes ``request`` in the context.
+
+    Templates: `500.html`
+    Context: None
+    """
+    from django.template import Context, loader
+    from django.http import HttpResponseServerError
+
+    template = loader.get_template('error/500.html')
+    return HttpResponseServerError(template.render(Context({
+        'request': request,
+    })))
+
+
+def handler404(request):
     """
     500 error handler which includes ``request`` in the context.
 
