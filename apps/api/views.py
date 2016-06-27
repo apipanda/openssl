@@ -56,6 +56,6 @@ class LogsView(LoginRequiredView):
     http_method_names = ['get']
 
 
-class PluginView(LoginRequiredView):
-    template_name = "account/plugins.html"
+class EditView(LoginRequiredView):
+    template_name = "account/edit.html"
     http_method_names = ['get']
