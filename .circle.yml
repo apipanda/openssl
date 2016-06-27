@@ -1,0 +1,21 @@
+machine:
+  timezone:
+    Africa/Lagos
+  python:
+    version: 2.7.5
+  environment:
+    ENV: TEST
+
+dependencies:
+  override:
+    pip install -r requirements/test.txt
+  pre:
+    pip install coveralls
+
+
+test:
+  override:
+    coverage run manage.py test
+  post:
+    coveralls
+
