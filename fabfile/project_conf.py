@@ -14,6 +14,10 @@ in the comments to help.
 '''
 
 import os
+from dotenv import load_dotenv, find_dotenv
+
+load_dotenv(find_dotenv())
+
 
 fabconf = {}
 
@@ -28,7 +32,7 @@ fabconf['PROJECT_NAME'] = "openssl_io"
 fabconf['SERVER_USERNAME'] = "ubuntu"
 
 # Full local path for .ssh
-fabconf['SSH_PATH'] = '~/.ssh'
+fabconf['SSH_PATH'] = os.getenv('SSH_PATH')
 
 if os.getenv('ENV') == 'DEBUG':
 
