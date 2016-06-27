@@ -44,3 +44,4 @@ package_conf.py
 htmlcov
 tmp
 bower_components
+.env
