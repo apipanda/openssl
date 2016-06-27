@@ -1,5 +1,6 @@
 {% extends "common/base.html" %}
 {% load static from staticfiles %}
+{% load extra_tags %}
 
 {% block page %}
 
@@ -83,7 +84,7 @@
     {{all}}
     {{current_section}}
     <script>
-    window.a = "{{vars(post_list) | escapejs}}";
-    console.log(a);
+    window.a = "{{post_list|json}}";
+    console.log(JSON.parse(a));
     </script>
 {% endblock page %}
