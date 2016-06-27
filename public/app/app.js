@@ -1,6 +1,7 @@
 var app = angular.module("app", [
-    'ngCookies',
+    'ngTouch',
     'ngAnimate',
+    'ngCookies',
     'ngRoute',
     'ajoslin.promise-tracker',
     'ngStorage',

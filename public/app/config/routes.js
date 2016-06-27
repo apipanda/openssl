@@ -1,6 +1,7 @@
 app.config(["$routeProvider", '$locationProvider', function ($routeProvider, $locationProvider) {
     "use strict";
     $locationProvider.html5Mode(true);
+    $routeProvider.caseInsensitiveMatch = true;
 
     $routeProvider.when('/start', {
         controller: 'HomeController',
@@ -8,7 +9,7 @@ app.config(["$routeProvider", '$locationProvider', function ($routeProvider, $lo
         templateUrl: '/home'
     })
         .when('/verify', {
-            controller: 'verifyController',
+            controller: 'VerifyController',
             controllerAs: 'vm',
             templateUrl: '/verification'
         })
@@ -17,58 +18,65 @@ app.config(["$routeProvider", '$locationProvider', function ($routeProvider, $lo
             controllerAs: 'vm',
             templateUrl: '/signin'
         })
-        // .when('/signup', {
-        //     controller: 'RegisterController',
-        //     controllerAs: 'vm',
-        //     templateUrl: '../register/'
-        // })
+        .when('/signup', {
+            controller: 'RegisterController',
+            controllerAs: 'vm',
+            templateUrl: '/join'
+        })
         .when('/recover', {
             controller: 'ResetController',
             controllerAs: 'vm',
             templateUrl: '/reset'
         })
+        .when('/guide', {
+            controller: 'GuideController',
+            controllerAs: 'vm',
+            templateUrl: '/guides'
+        })
+        .when('/blog', {
+            controller: 'BlogController',
+            controllerAs: 'vm',
+            templateUrl: '/post/'
+        })
+        .when('/blog/:path*', {
+            controller: 'PostController',
+            controllerAs: 'vm',
+            templateUrl: function (params) {
+                // body...
+                return '/post/' + params.path;
+            }
+        })
 
-        // .whenAuthenticated('/switcher', {
-        //     controller: 'SwitchController',
-        //     controllerAs: 'vm',
-        //     templateUrl: '../switcher/'
-        // })
-
-        // .whenAuthenticated('/dashboard', {
-        //     controller: 'DashController',
-        //     controllerAs: 'vm',
-        //     templateUrl: '../dashboard/'
-        // })
-
-        // .whenAuthenticated('/dashboard/hubs', {
-        //     controller: 'HubController',
-        //     controllerAs: 'vm',
-        //     templateUrl: '../hub/'
-        // })
-
-        // .whenAuthenticated('/dashboard/orgs', {
-        //     controller: 'OrgController',
-        //     controllerAs: 'vm',
-        //     templateUrl: '../orgs/'
-        // })
-
-        // .whenAuthenticated('/dashboard/workspaces', {
-        //     controller: 'WorkspaceController',
-        //     controllerAs: 'vm',
-        //     templateUrl: '../workspaces/'
-        // })
-
-        // .whenAuthenticated('/dashboard/plugins', {
-        //     controller: 'PluginController',
-        //     controllerAs: 'vm',
-        //     templateUrl: '../plugins/'
-        // })
-
-        // .whenAuthenticated('/profile', {
-        //     controller: 'ProfileController',
-        //     controllerAs: 'vm',
-        //     templateUrl: '../profile/'
-        // })
+        .whenAuthenticated('/dashboard', {
+            controller: 'DashController',
+            controllerAs: 'vm',
+            templateUrl: '/dashy'
+        })
+        .whenAuthenticated('/domains', {
+            controller: 'DomainController',
+            controllerAs: 'vm',
+            templateUrl: '/domain'
+        })
+        .whenAuthenticated('/bulletin', {
+            controller: 'MessageController',
+            controllerAs: 'vm',
+            templateUrl: '/notification'
+        })
+        .whenAuthenticated('/logs', {
+            controller: 'LogController',
+            controllerAs: 'vm',
+            templateUrl: '/stats'
+        })
+        .whenAuthenticated('/domain/edit', {
+            controller: 'EditController',
+            controllerAs: 'vm',
+            templateUrl: '/edit'
+        })
+        .whenAuthenticated('/profile', {
+            controller: 'ProfileController',
+            controllerAs: 'vm',
+            templateUrl: '/user'
+        })
 
         .otherwise({redirectTo: '/start'});
 }])
@@ -82,7 +90,7 @@ app.config(["$routeProvider", '$locationProvider', function ($routeProvider, $lo
         $interpolateProvider.endSymbol('$}');
     }])
     .config(['cfpLoadingBarProvider', function(cfpLoadingBarProvider) {
-        cfpLoadingBarProvider.includeSpinner = true;
+        cfpLoadingBarProvider.includeSpinner = false;
       }])
     .config(['$localStorageProvider', function ($localStorageProvider) {
         "use strict";

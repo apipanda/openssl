@@ -1,9 +1,9 @@
-app.controller("PluginController", [
+app.controller("PostController", [
     "$scope",
     "$location",
     "$log",
     function ($scope, $location, $log) {
         'use strict';
 
-        $log.debug("Plugins Controller Initialized");
+        $log.debug("Post Controller Initialized");
     }]);

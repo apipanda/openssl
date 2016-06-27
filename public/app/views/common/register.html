@@ -1,56 +1,104 @@
+{% extends "common/base.html" %}
 {% load static from staticfiles %}
 
-{% include "common/header.html" %}
-{% include "common/footer.html" %}
+{% block page %}
 <!--main content start-->
 
-<div id="login-page">
-  <div class="container">
 
-      <form class="form-login">
-        <h2 class="form-login-heading">New User</h2>
-        <div class="alert alert-danger alert-dismissable" ng-show="message" style="border-radius: 0px">
-          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-          <strong ng-bind="errCode"></strong> <p ng-bind="message"></p>
+    <div class="container">
+
+
+        <div class="row content-section">
+          <div class="col-lg-12">
+            <div class="card">
+                <div class="header">
+                    <h4 class="title">Domain Record</h4>
+                </div>
+                <div class="content">
+                    <form>
+                        <div class="row">
+                            <div class="col-md-5">
+                                <div class="form-group">
+                                    <label>Company (disabled)</label>
+                                    <input type="text" class="form-control" disabled placeholder="Company" value="Creative Code Inc.">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Username</label>
+                                    <input type="text" class="form-control" placeholder="Username" value="michael23">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Email address</label>
+                                    <input type="email" class="form-control" placeholder="Email">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>First Name</label>
+                                    <input type="text" class="form-control" placeholder="Company" value="Mike">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Last Name</label>
+                                    <input type="text" class="form-control" placeholder="Last Name" value="Andrew">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Address</label>
+                                    <input type="text" class="form-control" placeholder="Home Address" value="Bld Mihail Kogalniceanu, nr. 8 Bl 1, Sc 1, Ap 09">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>City</label>
+                                    <input type="text" class="form-control" placeholder="City" value="Mike">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Country</label>
+                                    <input type="text" class="form-control" placeholder="Country" value="Andrew">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Postal Code</label>
+                                    <input type="number" class="form-control" placeholder="ZIP Code">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>About Me</label>
+                                    <textarea rows="5" class="form-control" placeholder="Here can be your description" value="Mike">Lamborghini Mercy, Your chick she so thirsty, I'm in that two seat Lambo.</textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-fill pull-right">Confirm Record</button>
+                        <div class="clearfix"></div>
+                    </form>
+                </div>
+            </div>
+          </div>
         </div>
-        <div class="login-wrap">
-                <input type="text" class="form-control" data-ng-model="data.first_name" placeholder="First Name" required autofocus>
-                <br>
-                <input type="text" class="form-control" data-ng-model="data.last_name" placeholder="Last Name" >
-                <br>
-                <input type="email" class="form-control" data-ng-model="data.email" placeholder="Email" required>
-                <br>
-                <input type="text" class="form-control" data-ng-model="data.org.name" placeholder="Business Name" required>
-                <br>
-                <input type="url" class="form-control" data-ng-model="data.org.url" value="http://" placeholder="Organisation's Website" required>
-                <br>
-                <input type="password" class="form-control" data-ng-model="data.password" placeholder="Password" required>
-                <br>
-            <div class="checkbox">
-                <small class="pull-left">By signing up, you accept our<a href="/legal"> terms and conditions</a>.
-                </small>
-            </div>
-            <button class="btn btn-theme btn-block" data-ng-click="register()" type="submit"><i class="fa fa-lock"></i> SIGN UP</button>
-            <hr>
-
-            <div class="login-social-link centered hidden">
-            <p>or you can sign in via</p>
-                <button class="btn btn-github" type="submit"><i class="fa fa-github"></i> Github</button>
-                <button class="btn btn-bitbucket" type="submit"><i class="fa fa-bitbucket"></i> Bitbucket</button>
-            </div>
-
-            <div class="registration">
-                Have an account yet?<br/>
-                <a class="" href="/login">
-                    Login
-                </a>
-            </div>
-
-        </div>
-
-      </form>
-
-  </div>
-</div>
-
+    </div>
+    <hr class="divider">
 <!--main content end-->
+{% endblock page %}

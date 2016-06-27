@@ -1,4 +1,4 @@
-app.controller("OrgController", [
+app.controller("LogController", [
     "$scope",
     "$location",
     "$log",

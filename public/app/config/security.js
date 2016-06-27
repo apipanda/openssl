@@ -54,7 +54,7 @@ app.config(['$routeProvider', function ($routeProvider) {
 
     $rootScope.$on("$routeChangeStart", function(e, next, current){
 
-      if (!!next) {
+      if (!!next.originalPath) {
         if (next.originalPath.toLowerCase() === '/login' || next.originalPath.toLowerCase() === '/signup') {
           if (!!$sessionStorage.auth || !!$localStorage.auth) {
             $location.path('/dashboard');
