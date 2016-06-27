@@ -159,8 +159,7 @@ configure_instance = [
     # Setup supervisor
     {"action": "run", "params": "echo_supervisord_conf > /home/%(SERVER_USERNAME)s/supervisord.conf",
      "message": "Configuring supervisor"},
-    {"action": "put_template", "params": {"template": "%(FAB_CONFIG_PATH)s/templates/supervisord.conf",
-                                          "destination": "/home/%(SERVER_USERNAME)s/my.supervisord.conf"}},
+    {"action": "put_template", "params": {"template": "%(FAB_CONFIG_PATH)s/templates/supervisord.conf", "destination": "/home/%(SERVER_USERNAME)s/my.supervisord.conf"}},
     {"action": "run",
         "params": "cat /home/%(SERVER_USERNAME)s/my.supervisord.conf >> /home/%(SERVER_USERNAME)s/supervisord.conf"},
     {"action": "run",
