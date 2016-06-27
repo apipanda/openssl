@@ -30,7 +30,22 @@ fabconf['SERVER_USERNAME'] = "ubuntu"
 # Full local path for .ssh
 fabconf['SSH_PATH'] = '~/.ssh'
 
-fabconf['BASE_PATH'] = os.getenv('PROJECT_HOME') + '/openssl'
+if os.getenv('ENV') == 'DEBUG':
+
+    fabconf['BASE_PATH'] = os.getenv('PROJECT_HOME') + '/openssl'
+    # EC2 key. http://bit.ly/j5ImEZ
+    fabconf['AWS_ACCESS_KEY'] = os.getenv('AWS_ACCESS_KEY')
+
+    # EC2 secret. http://bit.ly/j5ImEZ
+    fabconf['AWS_SECRET_KEY'] = os.getenv('AWS_SECRET_KEY')
+else:
+
+    fabconf['BASE_PATH'] = './openssl'
+    # EC2 key. http://bit.ly/j5ImEZ
+    fabconf['AWS_ACCESS_KEY'] = 'AWS_ACCESS_KEY'
+
+    # EC2 secret. http://bit.ly/j5ImEZ
+    fabconf['AWS_SECRET_KEY'] = 'AWS_SECRET_KEY'
 
 # Name of the private key file you use to connect to EC2 instances
 fabconf['EC2_KEY_NAME'] = "openssl.pem"
@@ -79,12 +94,6 @@ fabconf['ACTIVATE'] = "source /home/%s/.virtualenvs/%s/bin/activate" % (
 
 # Name tag for your server instance on EC2
 fabconf['INSTANCE_NAME_TAG'] = "openssl_io"
-
-# EC2 key. http://bit.ly/j5ImEZ
-fabconf['AWS_ACCESS_KEY'] = os.getenv('AWS_ACCESS_KEY')
-
-# EC2 secret. http://bit.ly/j5ImEZ
-fabconf['AWS_SECRET_KEY'] = os.getenv('AWS_SECRET_KEY')
 
 # EC2 region. http://amzn.to/12jBkm7
 ec2_region = 'us-east-1'
