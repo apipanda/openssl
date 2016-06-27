@@ -12,9 +12,9 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 from openssl.config import *
-import dotenv
+from dotenv import load_dotenv, find_dotenv
 
-dotenv.load_dotenv(os.path.join(BASE_DIR, '.env'))
+load_dotenv(find_dotenv())
 
 SITE_ID = 1
 
