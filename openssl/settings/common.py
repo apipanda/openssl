@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 from openssl.config import *
 
+SITE_ID = 1
 
 ADMINS = [
     ('Bernard', 'bernard@apipanda.com'),
@@ -28,6 +29,7 @@ SERVER_EMAIL = 'support@openssl.io'
 INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.auth',
+    'django.contrib.sites',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
@@ -40,6 +42,7 @@ COMMON_APPS = (
     'apps.certificate',
 
     'tastypie',
+    'pinax.blog',
     # 'request',
 
     # logging
