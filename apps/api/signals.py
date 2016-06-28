@@ -6,7 +6,7 @@ import tldextract
 from tastypie.models import create_api_key
 
 from django.contrib.auth.models import User
-from app.models import Client
+from apps.api.models import Client
 from workspace.models import (Organisation, OrganisationMember)
 
 
