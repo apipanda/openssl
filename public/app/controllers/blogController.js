@@ -2,8 +2,11 @@ app.controller("BlogController", [
     "$scope",
     "$location",
     "$log",
-    function ($scope, $location, $log) {
+    "$window",
+    function ($scope, $location, $log, $window) {
         'use strict';
-
-        $log.debug("Hubs Controller Initialized");
+        this.postList = $window.postList;
+        this.postLength = $window.postList.length;
+        console.log(this);
+        $log.debug("Blog Controller Initialized");
     }]);
