@@ -4,7 +4,7 @@ from django.apps import AppConfig
 
 
 class AppConfig(AppConfig):
-    name = 'app'
+    name = 'api'
     verbose_name = 'Api Application'
 
     def ready(self):
