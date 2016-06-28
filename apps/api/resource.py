@@ -43,8 +43,8 @@ class Resource(ModelResource):
         always_return_data = True
         allowed_methods = ['get', 'post', 'put', 'patch', 'options', 'head']
 
-        authentication = Authentication
-        authorization = DjangoAuthorization()
+        # authentication = Authentication
+        # authorization = DjangoAuthorization()
         validation = Validation()
         collection_name = 'data'
         cache = SimpleCache(timeout=10)
@@ -52,7 +52,24 @@ class Resource(ModelResource):
 
 
 class DomainResource(Resource):
-    webmaster = fields.ToOneField('app.api.UserResource', 'owner')
+    webmaster = fields.ToOneField('apps.api.resource.UserResource', 'owner')
+
+    def prepend_urls(self):
+        return [
+            url(r"^(?P<resource_name>%s)/verify%s$" %
+                (self._meta.resource_name, trailing_slash()),
+                self.wrap_view('verify'), name="verify"),
+            # url(r'^(?P<resource_name>%s)/confim%s$' %
+            #     (self._meta.resource_name, trailing_slash()),
+            #     self.wrap_view('logout'), name='api_logout'),
+        ]
+
+    def verify(self, request, *args, **kwargs):
+        self.method_check(request, ['post'])
+        domain = request.body.get('domain')
+        print(dir(request))
+        raise CustomBadRequest(code='invalid_request',
+                               message="You are not logged in.")
 
     class Meta(Resource.Meta):
         queryset = Domain.objects.filter(is_active=False)
