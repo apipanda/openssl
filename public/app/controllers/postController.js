@@ -4,6 +4,5 @@ app.controller("PostController", [
     "$log",
     function ($scope, $location, $log) {
         'use strict';
-
         $log.debug("Post Controller Initialized");
     }]);
