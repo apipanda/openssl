@@ -9,8 +9,8 @@ register = template.Library()
 
 @register.filter(name='json', needs_autoescape=True)
 def to_json(data, autoescape=True):
-    data = data.select_related('author__username')
+
     dump = serializers.serialize(
         'json', data)
-    # print(data.values())
+
     return mark_safe(escapejs(dump))
