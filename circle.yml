@@ -1,8 +1,6 @@
 machine:
   timezone:
     Africa/Lagos
-  python:
-    version: 2.7.5
   environment:
     ENV: TEST
 
