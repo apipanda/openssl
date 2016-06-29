@@ -43,7 +43,6 @@ package_conf.py
 # Html coverage directory
 htmlcov
 tmp
-bower_components
 .env
 # Elastic Beanstalk Files
 .elasticbeanstalk/*
