@@ -36,6 +36,7 @@
     "font-awesome": "^4.6.3",
     "angular-animate": "^1.5.7",
     "angular-touch": "^1.5.7",
-    "angular-sanitize": "^1.5.7"
+    "angular-sanitize": "^1.5.7",
+    "purl": "^2.3.1"
   }
 }
