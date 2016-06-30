@@ -20,7 +20,8 @@ app.constant('FUSION_TABLE_ID', '1UZYbHI0Z4-B_3gQ2bkaQpnUz0LCLofsTfqO7ogVP')
         .constant('logoutUrl', 'logout')
         .constant('registerUrl', 'register')
 
-    .constant('domainBase', 'domains')
+    .constant('domainBase', 'domains/')
+        .constant('whoisUrl', 'whois')
         .constant('verifyUrl', 'verify')
         .constant('status', 'status')
 
