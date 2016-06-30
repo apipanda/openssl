@@ -1,3 +1,4 @@
+import whois
 from django.conf import settings
 from django.conf.urls import url
 from django.contrib.auth import (authenticate, login as
@@ -56,18 +57,28 @@ class DomainResource(Resource):
 
     def prepend_urls(self):
         return [
-            url(r"^(?P<resource_name>%s)/verify%s$" %
+            url(r"^(?P<resource_name>%s)/whois%s$" %
                 (self._meta.resource_name, trailing_slash()),
-                self.wrap_view('verify'), name="verify"),
+                self.wrap_view('get_whois'), name="whois"),
             # url(r'^(?P<resource_name>%s)/confim%s$' %
             #     (self._meta.resource_name, trailing_slash()),
             #     self.wrap_view('logout'), name='api_logout'),
         ]
 
-    def verify(self, request, *args, **kwargs):
+    def get_whois(self, request, *args, **kwargs):
         self.method_check(request, ['post'])
-        domain = request.body.get('domain')
-        print(dir(request))
+
+        data = json.loads(request.body)
+        host = data.get('host')
+
+        domain = whois.whois(host)
+        print(domain)
+        try:
+            pass
+        except Exception, e:
+            raise CustomBadRequest(code='whois_error',
+                                   message=e)
+
         raise CustomBadRequest(code='invalid_request',
                                message="You are not logged in.")
 
