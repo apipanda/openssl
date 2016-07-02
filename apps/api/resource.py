@@ -9,8 +9,8 @@ from django.contrib.auth.models import User
 
 from tastypie import fields
 from tastypie.cache import SimpleCache
-from tastypie.http import (HttpForbidden,
-                           HttpCreated)
+from tastypie.http import (HttpForbidden, HttpNoContent,
+                           HttpCreated, HttpAccepted)
 from tastypie.utils import trailing_slash
 
 
@@ -71,16 +71,15 @@ class DomainResource(Resource):
         data = json.loads(request.body)
         host = data.get('host')
 
-        domain = whois.whois(host)
-        print(domain)
         try:
-            pass
+            domain = whois.whois(host)
         except Exception, e:
-            raise CustomBadRequest(code='whois_error',
-                                   message=e)
+            print(e)
+            return CustomBadRequest(code='whois_error',
+                                    message='server error')
 
-        raise CustomBadRequest(code='invalid_request',
-                               message="You are not logged in.")
+        print(dict(domain))
+        self.create_response(request, json.load(dict(domain)), HttpAccepted)
 
     class Meta(Resource.Meta):
         queryset = Domain.objects.filter(is_active=False)
