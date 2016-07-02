@@ -10,9 +10,9 @@
                     <div class="col-md-8 col-md-offset-2">
                         <p class="intro-text">Get Free, unlimited SSL certificates for your website, instantly!</p>
                         <div class="input-group">
-                            <input type="url" class="form-control search" placeholder="Enter your domain name (eg: apipanda.com)" data-ng-model="domain">
+                            <input type="url" class="form-control search" placeholder="Enter your domain name (eg: apipanda.com)" data-ng-model="domain" data-ng-disabled="disableBtn">
                             <span class="input-group-btn">
-                              <button class="btn btn-primary search" type="button" data-ng-click="verify()">Get Started</button>
+                              <button class="btn btn-flat search" data-ng-disabled="disableBtn || $$ng-dirty" type="button" data-ng-click="verify()"><span data-ng-hide="disableBtn">Get Started</span><span data-ng-show="disableBtn"><i class="fa fa-spin fa-spinner" class="#fff"></i></span></button>
                             </span>
                         </div>
                     </div>
