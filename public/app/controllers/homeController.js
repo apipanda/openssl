@@ -12,7 +12,7 @@ app.controller("HomeController", [
             $scope.disableBtn = true;
             var data = ($.url($scope.domain)).attr();
             var requestUrl = domainBase + whoisUrl;
-            console.log($scope.domain, data);
+            // console.log($scope.domain, data);
             Request.fetch(requestUrl, data)
                 .then(function (response) {
                     // body...
