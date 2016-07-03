@@ -89,19 +89,19 @@ button.search:hover {
 
 .search::-webkit-input-placeholder { /* WebKit browsers */
     color: rgb(0, 133, 131);
-    font-size: 1.3em;
+    font-size: 2m;
 }
 :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
     color: rgb(0, 133, 131);
-    font-size: 1.3em;
+    font-size: 2em;
 }
 ::-moz-placeholder { /* Mozilla Firefox 19+ */
     color: rgb(0, 133, 131);
-    font-size: 1.3em;
+    font-size: 2em;
 }
 :-ms-input-placeholder { /* Internet Explorer 10+ */
     color: rgb(0, 133, 131);
-    font-size: 1.3em;
+    font-size: 2em;
 }
 /*!
  * Start Bootstrap - Grayscale Bootstrap Theme (http://startbootstrap.com)
