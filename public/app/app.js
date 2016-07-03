@@ -7,5 +7,6 @@ var app = angular.module("app", [
     'ajoslin.promise-tracker',
     'ngStorage',
     'ui.bootstrap',
+    'ui.mask',
     'angular-loading-bar'
 ]);
