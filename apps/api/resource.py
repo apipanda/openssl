@@ -17,6 +17,7 @@ from tastypie.utils import trailing_slash
 from tastypie.resources import (ModelResource,)
 from tastypie.validation import Validation
 from tastypie.throttle import CacheDBThrottle
+from tastypie.serializers import Serializer
 from tastypie.authorization import DjangoAuthorization
 from tastypie.authentication import (SessionAuthentication,
                                      MultiAuthentication,
@@ -48,6 +49,7 @@ class Resource(ModelResource):
         # authorization = DjangoAuthorization()
         validation = Validation()
         collection_name = 'data'
+        serializer = Serializer(formats=['json', 'jsonp'])
         cache = SimpleCache(timeout=10)
         throttle = CacheDBThrottle(throttle_at=settings.THROTTLE_TIMEOUT)
 
@@ -70,16 +72,16 @@ class DomainResource(Resource):
 
         data = json.loads(request.body)
         host = data.get('host')
-
+        print(dir(self))
         try:
             domain = whois.whois(host)
+            print(domain)
         except Exception, e:
             print(e)
             return CustomBadRequest(code='whois_error',
-                                    message='server error')
+                                    message='Domain name verification error. Our developers have been notified.')
 
-        print(dict(domain))
-        self.create_response(request, json.load(dict(domain)), HttpAccepted)
+        self.create_response(request, domain, HttpAccepted)
 
     class Meta(Resource.Meta):
         queryset = Domain.objects.filter(is_active=False)
