@@ -87,6 +87,11 @@ USE_L10N = True
 
 USE_TZ = True
 
+DOMAIN_VERIFICATION_OPTIONS = (
+    ('C', 'CNAME'),
+    ('F', 'File Upload'),
+    ('T', 'TXT Record'),
+)
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
