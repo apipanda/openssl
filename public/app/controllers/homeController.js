@@ -8,9 +8,9 @@ app.controller("HomeController", [
     "whoisUrl",
     function ($scope, $location, $log, $localStorage, Request, domainBase, whoisUrl) {
         'use strict';
-        $scope.verify = function () {
-            $scope.error = false;
-            $scope.warn = false;
+        $scope.whois = function () {
+            $scope.error = null;
+            $scope.warn = null;
             $scope.status = null;
             $scope.disableBtn = true;
             var data = ($.url($scope.domain)).attr();
