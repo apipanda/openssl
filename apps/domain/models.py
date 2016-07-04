@@ -1,11 +1,15 @@
 from __future__ import unicode_literals, absolute_import
-from django.contrib.auth.models import User
 from django.db import models
+from django.contrib.auth.models import User
+
+from django.conf import settings
+
 from apps.certificate.models import Certificate
 
 
 # Create your models here.
 class Domain(models.Model):
+
     domain_name = models.CharField(max_length=200)
     domain_url = models.CharField(max_length=200)
     domain_registerer = models.CharField(max_length=200)
@@ -16,6 +20,7 @@ class Domain(models.Model):
     expiration_date = models.DateField()
     last_updated = models.DateField(auto_now=True)
     date_entered = models.DateField(auto_now_add=True)
+    verification_type = models.CharField(choices=settings.DOMAIN_VERIFICATION_OPTIONS, max_length=16)
     is_active = models.BooleanField(default=True)
     domain_certificate = models.ForeignKey(
         Certificate, related_name='certified_domain')
