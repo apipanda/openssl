@@ -9,6 +9,12 @@
                 <div class="row">
                     <div class="col-md-8 col-md-offset-2">
                         <p class="intro-text">Get Free, unlimited SSL certificates for your website, instantly!</p>
+                                <div class="alert alert-warning" data-ng-show="warn">
+                                    <span><b data-ng-bind="status">  </b> <span data-ng-bind="warn"></span></span>
+                                </div>
+                                <div class="alert alert-danger" data-ng-show="error">
+                                    <span><b data-ng-bind="status"></b> <span data-ng-bind="error"></span></span>
+                                </div>
                         <div class="input-group">
                             <input type="text" class="form-control search" placeholder="Enter your domain name (eg: apipanda.com)" data-ng-model="domain" data-ng-disabled="disableBtn">
                             <span class="input-group-btn">
