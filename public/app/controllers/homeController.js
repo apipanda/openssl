@@ -2,13 +2,16 @@ app.controller("HomeController", [
     "$scope",
     "$location",
     "$log",
+    "$localStorage",
     "Request",
     "domainBase",
     "whoisUrl",
-    function ($scope, $location, $log, Request, domainBase, whoisUrl) {
+    function ($scope, $location, $log, $localStorage, Request, domainBase, whoisUrl) {
         'use strict';
-        $log.debug(console.dir(Request.fetch));
         $scope.verify = function () {
+            $scope.error = false;
+            $scope.warn = false;
+            $scope.status = null;
             $scope.disableBtn = true;
             var data = ($.url($scope.domain)).attr();
             var requestUrl = domainBase + whoisUrl;
@@ -16,13 +19,22 @@ app.controller("HomeController", [
             Request.fetch(requestUrl, data)
                 .then(function (response) {
                     // body...
-                    console.log(response, 'response');
+                    if (!response.success) {
+                        $scope.warn = response.message;
+                        $scope.status = response.status + ' -';
+                    }
+                    $localStorage.domain = response.data;
+
+                    $location.path('/verify');
+
                 }, function (error) {
                     // body...
-                    console.log(error, 'errors');
+                    $scope.error = error.statusText;
+                    $scope.status = error.status + ' -';
                 });
             $scope.disableBtn = false;
 
         };
+
         $log.info("Home Controller Initialized");
     }]);
