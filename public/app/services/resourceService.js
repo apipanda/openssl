@@ -31,6 +31,8 @@ app.service('Request', ['$http', 'API_URL', '$q', '$localStorage', 'promiseTrack
                     defer.reject(res.data.error);
                 };
 
+            }, function (error) {
+                    defer.reject(error);
             });
             return defer.promise;
         };
