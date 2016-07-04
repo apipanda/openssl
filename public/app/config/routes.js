@@ -94,6 +94,6 @@ app.config(["$routeProvider", '$locationProvider', function ($routeProvider, $lo
       }])
     .config(['$localStorageProvider', function ($localStorageProvider) {
         "use strict";
-        $localStorageProvider.setKeyPrefix('pandassl');
+        $localStorageProvider.setKeyPrefix('pandassl-');
     }]);
 
