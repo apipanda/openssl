@@ -1,34 +1,37 @@
+{% extends "common/base.html" %}
 {% load static from staticfiles %}
 
-{% include "common/header.html" %}
-{% include "common/footer.html" %}
+{% block page %}
 <!--main content start-->
-<section class="main-content">
-    <section class="wrapper site-min-height">
+<section class="container">
+    <section class="row content-section">
       <div class="row mt">
         <div class="container">
           <div class="col-lg-12">
             <div class="jumbotron">
                   <div class="form-group">
-                                    <div class="alert alert-warning" data-ng-show="warn">
-                                        <span><b data-ng-bind="status">  </b> <span data-ng-bind="warn"></span></span>
-                                    </div>
-                                    <div class="alert alert-danger" data-ng-show="error">
-                                        <span><b data-ng-bind="status"></b> <span data-ng-bind="error"></span></span>
-                                    </div>
+                        <form name="domainForm" data-ng-submit="whois()">
+                            <div class="alert alert-warning" data-ng-show="warn">
+                                <span><b data-ng-bind="status">  </b> <span data-ng-bind="warn"></span></span>
+                            </div>
+                            <div class="alert alert-danger" data-ng-show="error">
+                                <span><b data-ng-bind="status"></b> <span data-ng-bind="error"></span></span>
+                            </div>
                             <div class="input-group">
                                 <input type="text" class="form-control search" placeholder="Enter your domain name (eg: apipanda.com)" data-ng-model="domain" data-ng-disabled="disableBtn">
                                 <span class="input-group-btn">
                                   <button class="btn btn-flat search" data-ng-disabled="disableBtn || $$ng-dirty" type="submit"><span data-ng-hide="disableBtn">Get Started</span><span data-ng-show="disableBtn"><i class="fa fa-spin fa-spinner" class="#fff"></i></span></button>
                                 </span>
                             </div>
+                        </form>
                   </div>
-               </div><address>
-  <strong>Twitter, Inc.</strong><br>
-  1355 Market Street, Suite 900<br>
-  San Francisco, CA 94103<br>
-  <abbr title="Phone">P:</abbr> (123) 456-7890
-</address>
+               </div>
+               <address>
+                  <strong>Twitter, Inc.</strong><br>
+                  1355 Market Street, Suite 900<br>
+                  San Francisco, CA 94103<br>
+                  <abbr title="Phone">P:</abbr> (123) 456-7890
+                </address>
               <h4>Most Depended on</h4>
               <hr>
             </div>
@@ -36,19 +39,10 @@
 
       <div class="row">
       </div>
-      <div class="pull-right">
-        <ul class="pagination">
-          <li class="disabled"><a href="#">&laquo;</a></li>
-          <li class="active"><a href="#">1</a></li>
-          <li><a href="#">2</a></li>
-          <li><a href="#">3</a></li>
-          <li><a href="#">4</a></li>
-          <li><a href="#">5</a></li>
-          <li><a href="#">&raquo;</a></li>
-        </ul>
-      </div>
       </div>
     </section><!--/wrapper -->
 </section><!-- /MAIN CONTENT -->
 
 <!--main content end-->
+
+{% endblock page %}
