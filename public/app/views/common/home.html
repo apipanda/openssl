@@ -19,7 +19,7 @@
                             <div class="input-group">
                                 <input type="text" class="form-control search" placeholder="Enter your domain name (eg: apipanda.com)" data-ng-model="domain" data-ng-disabled="disableBtn">
                                 <span class="input-group-btn">
-                                  <button class="btn btn-flat search" data-ng-disabled="disableBtn || $$ng-dirty" type="submit"><span data-ng-hide="disableBtn">Get Started</span><span data-ng-show="disableBtn"><i class="fa fa-spin fa-spinner" class="#fff"></i></span></button>
+                                  <button class="btn btn-flat search" data-ng-disabled="disableBtn || !!!domain" type="submit"><span>Get Started</span><span data-ng-show="disableBtn"><i class="fa fa-spin fa-spinner" class="#fff"></i></span></button>
                                 </span>
                             </div>
                         </form>
