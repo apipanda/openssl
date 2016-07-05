@@ -42,12 +42,13 @@ app.controller("VerifyController", [
                             $scope.status = response.status + ' -';
                         }
                         $localStorage.domain = response.data;
+                        $scope.domainData = $localStorage.domain;
 
                         $location.path('/verify');
 
                     }, function (error) {
                         // body...
-                        $scope.error = error.statusText;
+                        $scope.error = error.statusText + ". We've notified the developers.";
                         $scope.status = error.status + ' -';
                     });
             }
