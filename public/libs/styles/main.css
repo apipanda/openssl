@@ -463,3 +463,13 @@ img::-moz-selection {
 body {
     webkit-tap-highlight-color: rgba(255,255,255,.2);
 }
+.ng-hide {
+  line-height: 0;
+  transition: all linear 0.5s;
+  opacity: 0;
+  padding: 0 10px;
+}
+
+.ng-hide-add, .ng-hide-remove {
+  transition: all linear 0.5s;
+}
