@@ -36,7 +36,8 @@ app.controller("HomeController", [
 
                     }, function (error) {
                         // body...
-                        $scope.error = error.statusText;
+                        console.log(error);
+                        $scope.error = error.statusText + ". We've notified the developers.";
                         $scope.status = error.status + ' -';
                     });
             }
