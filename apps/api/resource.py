@@ -1,3 +1,6 @@
+# -*- coding: utf-8 -*-
+import uuid
+import base64
 import whois
 from datetime import datetime
 from django.conf import settings
@@ -79,26 +82,39 @@ class DomainResource(Resource):
             domain = whois.whois(host)
 
             host = (lambda d: d.domain_name if isinstance(d.domain_name, str) else max(d.domain_name))(domain)
-
-            expiration_date = (lambda d: d.expiration_date if isinstance(d.expiration_date, str) else min(d.expiration_date))(domain)
-
-            if datetime.now() > expiration_date:
+            uuid_hex = uuid.uuid3(uuid.NAMESPACE_URL, str(host))
+            domain_uuid = base64.b64encode(uuid_hex.get_hex())
+            domain.update(uuid=domain_uuid)
+            domain_obj = Domain.objects.filter(domain_name=host).last()
+            print(dir(domain))
+            if domain_obj:
                 resp = {
                     "success": False,
                     "status": 418,
-                    "message": "Your Domain name has expired.",
+                    "message": "We have already generated an SSL certificate for your domain. Login to manage your account.",
                     "data": domain
                 }
             else:
-                resp = {
-                    "success": True,
-                    "message": "Whois record exist.",
-                    "data": domain
-                }
+                expiration_date = (lambda d: d.expiration_date if isinstance(d.expiration_date, str) else min(d.expiration_date))(domain)
+
+                if datetime.now() > expiration_date:
+                    resp = {
+                        "success": False,
+                        "status": 418,
+                        "message": "Your Domain name has expired.",
+                        "data": domain
+                    }
+                else:
+                    resp = {
+                        "success": True,
+                        "message": "Whois record exist.",
+                        "data": domain
+                    }
 
             return self.create_response(request, resp, HttpAccepted)
 
         except Exception, e:
+            print(e)
             return CustomBadRequest(code='whois_error',
                                     message='Domain name verification error. Our developers have been notified.')
 
