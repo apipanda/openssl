@@ -46,6 +46,7 @@ COMMON_APPS = (
 
     'tastypie',
     'pinax.blog',
+    'social_widgets',
     # 'request',
 
     # logging
