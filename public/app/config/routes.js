@@ -86,8 +86,8 @@ app.config(["$routeProvider", '$locationProvider', function ($routeProvider, $lo
     }])
     .config(['$interpolateProvider', function ($interpolateProvider) {
         "use strict";
-        $interpolateProvider.startSymbol('{$');
-        $interpolateProvider.endSymbol('$}');
+        $interpolateProvider.startSymbol('{[');
+        $interpolateProvider.endSymbol(']}');
     }])
     .config(['cfpLoadingBarProvider', function(cfpLoadingBarProvider) {
         cfpLoadingBarProvider.includeSpinner = false;
