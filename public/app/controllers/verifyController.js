@@ -33,7 +33,8 @@ app.controller("VerifyController", [
             } else {
                 var data = ($.url($scope.domain)).attr();
                 var requestUrl = domainBase + whoisUrl;
-                // console.log($scope.domain, data);
+                data.base = data.protocol ? data.base : 'http://' + data.base;
+                console.log($scope.domain, data);
                 Request.fetch(requestUrl, data)
                     .then(function (response) {
                         // body...
@@ -58,6 +59,34 @@ app.controller("VerifyController", [
         };
 
         init();
+
+        $scope.verify = function (type) {
+            console.log(type);
+            $scope.disableBtn = true;
+            var requestUrl = domainBase + verifyUrl;
+            var data = $scope.domainData;
+            data.verification_type = type;
+            // console.log($scope.domain, data);
+            Request.fetch(requestUrl, data)
+                .then(function (response) {
+                    // body...
+                    if (!response.success) {
+                        $scope.warn = response.message;
+                        $scope.status = response.status + ' -';
+                    }
+                    $localStorage.domain = response.data;
+                    $scope.domainData = $localStorage.domain;
+
+                    $location.path('/verify');
+
+                }, function (error) {
+                    // body...
+                    $scope.error = error.statusText + ". We've notified the developers.";
+                    $scope.status = error.status + ' -';
+                });
+            $scope.disableBtn = false;
+
+        }
 
         $log.debug("Verify Controller Initialized");
     }]);
