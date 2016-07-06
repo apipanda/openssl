@@ -44,7 +44,7 @@ configure_instance = [
     # List of APT packages to install
     {"action": "apt",
      "params": ["libpq-dev", "nginx", "memcached", "git",
-                "python-setuptools", "python-dev", "build-essential", "python-pip"],
+                "python-setuptools", "python-dev", "build-essential", "python-pip", "python-lxml"],
      "message":"Installing apt-get packages"},
 
     # List of pypi packages to install
