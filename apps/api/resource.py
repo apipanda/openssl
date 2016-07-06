@@ -2,7 +2,10 @@
 import uuid
 import base64
 import whois
+import urllib2
 from datetime import datetime
+from dns import resolver as dns
+from bs4 import BeautifulSoup as bs
 from django.conf import settings
 from django.conf.urls import url
 from django.contrib.auth import (authenticate, login as
@@ -81,12 +84,14 @@ class DomainResource(Resource):
         try:
             domain = whois.whois(host)
 
-            host = (lambda d: d.domain_name if isinstance(d.domain_name, str) else max(d.domain_name))(domain)
             uuid_hex = uuid.uuid3(uuid.NAMESPACE_URL, str(host))
             domain_uuid = base64.b64encode(uuid_hex.get_hex())
-            domain.update(uuid=domain_uuid)
+            cname_domain = base64.urlsafe_b64encode(host.lower())
+
+            domain.update(uuid=domain_uuid,
+                          cname=cname_domain.lower(), host=host)
             domain_obj = Domain.objects.filter(domain_name=host).last()
-            print(dir(domain))
+
             if domain_obj:
                 resp = {
                     "success": False,
@@ -95,7 +100,72 @@ class DomainResource(Resource):
                     "data": domain
                 }
             else:
-                expiration_date = (lambda d: d.expiration_date if isinstance(d.expiration_date, str) else min(d.expiration_date))(domain)
+                expiration_date = (lambda d: d.expiration_date if isinstance(
+                    d.expiration_date, str) else min(d.expiration_date))(domain)
+
+                if datetime.now() > expiration_date:
+                    resp = {
+                        "success": False,
+                        "status": 418,
+                        "message": "Your Domain name has expired.",
+                        "data": domain
+                    }
+                else:
+                    resp = {
+                        "success": True,
+                        "message": "Whois record exist.",
+                        "data": domain
+                    }
+
+            return self.create_response(request, resp, HttpAccepted)
+
+        except Exception, e:
+            return CustomBadRequest(code='whois_error',
+                                    message='Domain name verification error. Our developers have been notified.')
+
+    def verify(self, request, *args, **kwargs):
+        self.method_check(request, ['post'])
+        verification_options = {
+            'C': 'CNAME',
+            'T': 'TXT'
+        }
+        data = json.loads(request.body)
+        host = data.get('host')
+        key = data.get('key')
+        verification_option = data.get('type')
+        uuid_hex = uuid.uuid3(uuid.NAMESPACE_URL, str(host))
+
+        try:
+            if verification_option in verification_options.keys():
+                domain = dns.query(str(host), verification_options[
+                                   verification_option])
+
+            elif verification_option.upper() == 'F':
+                pass
+
+            elif verification_option.upper() == 'M':
+                pass
+            else:
+                return CustomBadRequest(code='whois_error',
+                                        message='Domain name verification error. Our developers have been notified.')
+
+            domain_uuid = base64.b64encode(uuid_hex.get_hex())
+            cname_domain = base64.urlsafe_b64encode(host.lower())
+
+            domain.update(uuid=domain_uuid,
+                          cname=cname_domain.lower(), host=host)
+            domain_obj = Domain.objects.filter(domain_name=host).last()
+
+            if domain_obj:
+                resp = {
+                    "success": False,
+                    "status": 418,
+                    "message": "We have already generated an SSL certificate for your domain. Login to manage your account.",
+                    "data": domain
+                }
+            else:
+                expiration_date = (lambda d: d.expiration_date if isinstance(
+                    d.expiration_date, str) else min(d.expiration_date))(domain)
 
                 if datetime.now() > expiration_date:
                     resp = {
