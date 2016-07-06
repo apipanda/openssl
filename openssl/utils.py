@@ -7,3 +7,7 @@ def json_serial(obj):
         serial = obj.isoformat()
         return serial
     raise TypeError ("Type not serializable")
+
+
+def parse_url(url, *args, **kwargs):
+    pass
