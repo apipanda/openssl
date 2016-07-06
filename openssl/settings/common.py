@@ -92,8 +92,10 @@ DOMAIN_VERIFICATION_OPTIONS = (
     ('C', 'CNAME'),
     ('F', 'File Upload'),
     ('T', 'TXT Record'),
+    ('M', 'Meta Tag'),
 )
 
+DOMAIN_VERIFICATION_KEY = 'openssl-domain-verification'
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
