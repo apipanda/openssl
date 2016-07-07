@@ -22,6 +22,7 @@ app.controller("HomeController", [
             } else {
                 var data = ($.url($scope.domain)).attr();
                 var requestUrl = domainBase + whoisUrl;
+                data.base = data.protocol ? data.base : 'http://' + data.base;
                 // console.log($scope.domain, data);
                 Request.fetch(requestUrl, data)
                     .then(function (response) {
