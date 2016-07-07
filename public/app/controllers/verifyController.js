@@ -61,7 +61,7 @@ app.controller("VerifyController", [
         init();
 
         $scope.verify = function (type) {
-            console.log(type);
+
             $scope.disableBtn = true;
             var requestUrl = domainBase + verifyUrl;
             var data = $scope.domainData;
