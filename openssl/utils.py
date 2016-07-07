@@ -1,13 +1,18 @@
 from datetime import datetime
 
+
 def json_serial(obj):
     """JSON serializer for objects not serializable by default json code"""
 
     if isinstance(obj, datetime):
         serial = obj.isoformat()
         return serial
-    raise TypeError ("Type not serializable")
+    raise TypeError("Type not serializable")
 
 
 def parse_url(url, *args, **kwargs):
     pass
+
+
+def subdomain(path, host):
+    return path + '.' + host
