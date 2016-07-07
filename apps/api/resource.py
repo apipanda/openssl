@@ -30,9 +30,9 @@ from tastypie.authentication import (SessionAuthentication,
                                      MultiAuthentication,
                                      ApiKeyAuthentication)
 
-from openssl.utils import json_serial
-from apps.domain.models import Domain
 
+from apps.domain.models import Domain
+from openssl.utils import subdomain
 from apps.api.exceptions import CustomBadRequest
 from apps.certificate.models import Certificate
 
@@ -44,6 +44,9 @@ except Exception:
 
 Authentication = MultiAuthentication(ApiKeyAuthentication(),
                                      SessionAuthentication(),)
+
+
+DOMAIN_VERIFICATION_KEY = getattr(settings, 'DOMAIN_VERIFICATION_KEY')
 
 
 class Resource(ModelResource):
@@ -120,8 +123,9 @@ class DomainResource(Resource):
             return self.create_response(request, resp, HttpAccepted)
 
         except Exception, e:
+            print(e)
             return CustomBadRequest(code='whois_error',
-                                    message='Domain name verification error. Our developers have been notified.')
+                                    message='Whois record verification error. Our developers have been notified.')
 
     def verify(self, request, *args, **kwargs):
         self.method_check(request, ['post'])
@@ -131,62 +135,69 @@ class DomainResource(Resource):
         }
         data = json.loads(request.body)
         host = data.get('host')
-        key = data.get('key')
-        verification_option = data.get('type')
-        uuid_hex = uuid.uuid3(uuid.NAMESPACE_URL, str(host))
+        base = data.get('base')
+        domain_uuid = data.get('uuid')
+        verification_option = data.get('type').upper()
 
         try:
-            if verification_option in verification_options.keys():
-                domain = dns.query(str(host), verification_options[
-                                   verification_option])
+            if verification_option == 'T':
 
-            elif verification_option.upper() == 'F':
-                pass
+                query = dns.query(str(host), verification_options[
+                    verification_option])
+                for index, answer in enumerate(query.response.answer):
+                    if domain_uuid in answer:
+                        resp = {
+                            "success": True,
+                            "message": "Domain verification was successful.",
+                            "data": data
+                        }
+                        return self.create_response(request, resp, HttpAccepted)
 
-            elif verification_option.upper() == 'M':
-                pass
-            else:
-                return CustomBadRequest(code='whois_error',
-                                        message='Domain name verification error. Our developers have been notified.')
+            elif verification_option == 'C':
+                cname = data.get('cname')
+                app_domain = getattr(settings, 'HOST')
+                host = subdomain(cname, host)
+                query = dns.query(host, verification_options[
+                    verification_option])
+                for index, answer in enumerate(query.response.answer):
+                    if app_domain in answer:
+                        resp = {
+                            "success": True,
+                            "message": "Domain verification was successful.",
+                            "data": data
+                        }
+                        return self.create_response(request, resp, HttpAccepted)
 
-            domain_uuid = base64.b64encode(uuid_hex.get_hex())
-            cname_domain = base64.urlsafe_b64encode(host.lower())
-
-            domain.update(uuid=domain_uuid,
-                          cname=cname_domain.lower(), host=host)
-            domain_obj = Domain.objects.filter(domain_name=host).last()
-
-            if domain_obj:
-                resp = {
-                    "success": False,
-                    "status": 418,
-                    "message": "We have already generated an SSL certificate for your domain. Login to manage your account.",
-                    "data": domain
-                }
-            else:
-                expiration_date = (lambda d: d.expiration_date if isinstance(
-                    d.expiration_date, str) else min(d.expiration_date))(domain)
-
-                if datetime.now() > expiration_date:
-                    resp = {
-                        "success": False,
-                        "status": 418,
-                        "message": "Your Domain name has expired.",
-                        "data": domain
-                    }
-                else:
+            elif verification_option == 'F':
+                fp = urllib2.urlopen(base)
+                page = fp.read()
+                if domain_uuid in page and DOMAIN_VERIFICATION_KEY in page:
                     resp = {
                         "success": True,
-                        "message": "Whois record exist.",
-                        "data": domain
+                        "message": "Domain verification was successful.",
+                        "data": data
                     }
+                    return self.create_response(request, resp, HttpAccepted)
 
-            return self.create_response(request, resp, HttpAccepted)
+            elif verification_option == 'M':
+                fp = urllib2.urlopen(base)
+                soup = bs(fp)
+                meta = soup.find(
+                    'meta', attrs={'name': DOMAIN_VERIFICATION_KEY})
+                if domain_uuid in meta['content']:
+                    resp = {
+                        "success": True,
+                        "message": "Domain verification was successful.",
+                        "data": data
+                    }
+                    return self.create_response(request, resp, HttpAccepted)
 
+            return CustomBadRequest(code='dns_error',
+                                    message='Domain name verification error. Please check your DNS configurations. Meanwhile, our developers have been notified.')
         except Exception, e:
             print(e)
-            return CustomBadRequest(code='whois_error',
-                                    message='Domain name verification error. Our developers have been notified.')
+            return CustomBadRequest(code='dns_error',
+                                    message='Domain name verification error. Please check your DNS configurations. Meanwhile, our developers have been notified.')
 
     class Meta(Resource.Meta):
         queryset = Domain.objects.filter(is_active=True)
