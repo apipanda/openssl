@@ -27,7 +27,7 @@
                   </div>
                </div>
                <address>
-                  <strong data-ng-bind="domainData.org || domainData.name"></strong> <i class="fa fa-check" style="color: seagreen"></i> <small><code>Whois record verified.</code></small><br>
+                  <strong data-ng-bind="domainData.org || domainData.name"></strong> <i class="fa fa-check-circle" style="color: royalblue"></i> <small><code>Whois record verified.</code></small><i class="fa fa-check-circle" style="color: seagreen"></i> <small><code>Domain Ownership verified.</code></small><br>
                   <span data-ng-bind="domainData.address"></span><br>
                   <span data-ng-bind="domainData.city"></span>, <span data-ng-bind="domainData.state"></span> <span data-ng-bind="domainData.zipcode"></span>,<br>
                   <span data-ng-bind="domainData.country"></span>. <br>
@@ -150,7 +150,7 @@
                         <strong>Note: Do not rename your HTML file or we won’t recognize it when we look for it.</strong> <br><br>
                         <ol>
                             <li>Open your website homepage HTML file using any text or HTML editor. If your web host uses a web-based page editor (Squarespace, Wix, WordPress.com, and so on), open your homepage in their editor.</li>
-                            <li>Paste this meta tag <code>&lt;meta name="openssl-site-verification" content="openssl-domain-verification=<span data-ng-bind="domainData.uuid"></span>" /&gt;</code> into the <code>&lt;head&gt;</code> section that’s before the first <code>&lt;body&gt;</code> section. If you’re unsure how to add meta tags with a web-based page editor, contact your web host’s technical support.</li>
+                            <li>Paste this meta tag <code>&lt;meta name="openssl-domain-verification" content="openssl-domain-verification=<span data-ng-bind="domainData.uuid"></span>" /&gt;</code> into the <code>&lt;head&gt;</code> section that’s before the first <code>&lt;body&gt;</code> section. If you’re unsure how to add meta tags with a web-based page editor, contact your web host’s technical support.</li>
                             <li>Save the changes to your home page. If you edited the file offline, upload it to your web server, overwriting the previous homepage file.</li>
                             <li>Click the Verify button below.</li>
                         </ol>
