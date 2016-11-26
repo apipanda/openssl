@@ -1,0 +1,65 @@
+{% load staticfiles %}
+{% block header %}
+<!--header start-->
+<header class="header black-bg">
+      <div class="sidebar-toggle-box">
+          <div class="fa fa-bars tooltips" data-placement="right" data-original-title="Toggle Navigation"></div>
+      </div>
+    <!--logo start-->
+            <a class="logo" href="/"><img src="{% static "images/icn.png" %}"></a>
+    <!--logo end-->
+    <div class="nav notify-row" id="top_menu">
+        <!--  notification start -->
+        <ul class="nav top-menu">
+            <!-- inbox dropdown start-->
+            <li id="header_inbox_bar" class="dropdown">
+                <a data-toggle="dropdown" class="dropdown-toggle hidden" href="">
+                    <i class="fa fa-envelope-o"></i>
+                    <!-- <span class="badge bg-theme">5</span> -->
+                </a>
+                <ul class="dropdown-menu extended inbox">
+                    <div class="notify-arrow notify-arrow-green"></div>
+                    <li>
+                        <p class="green">You have 5 new messages</p>
+                    </li>
+                    <li>
+                        <a href="index.html#">
+                            <span class="photo"><img alt="avatar" src="{% static "images/icon.png" %}"></span>
+                            <span class="subject">
+                            <span class="from">Zac Snider</span>
+                            <span class="time">Just now</span>
+                            </span>
+                            <span class="message">
+                                Hi mate, how is everything?
+                            </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="index.html#">See all messages</a>
+                    </li>
+                </ul>
+            </li>
+            <!-- inbox dropdown end -->
+        </ul>
+        <!--  notification end -->
+    </div>
+    <div class="top-menu">
+        <ul class="nav pull-right top-menu">
+          <li>
+            <div class="btn-group  btn-default logout">
+              <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown">
+                Manage <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" role="menu">
+                <li><a href="/switcher">Switch Org</a></li>
+                <li class="divider"></li>
+                <li><a data-ng-click="logout()">Logout</a></li>
+              </ul>
+            </div>
+          </li>
+        </ul>
+    </div>
+</header>
+<!--header end-->
+
+{% endblock header %}

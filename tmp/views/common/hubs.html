@@ -1,0 +1,68 @@
+{% load static from staticfiles %}
+
+{% include "common/header.html" %}
+{% include "common/footer.html" %}
+<!--main content start-->
+<section class="main-content">
+    <section class="wrapper site-min-height">
+      <div class="row mt">
+        <div class="container">
+          <div class="col-lg-12">
+            <div class="jumbotron">
+                  <div class="form-group">
+                    <div class="input-group">
+                      <input type="text" class="form-control search">
+                      <span class="input-group-btn">
+                        <button class="btn btn-primary search" type="button">Button</button>
+                      </span>
+                    </div>
+                  </div>
+               </div>
+              <h4>Most Depended on</h4>
+              <hr>
+            </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-2 col-md-3 col-sm-12">
+          <div class="list-group table-of-contents" style="background-color: transperent">
+            <a class="list-group-item" href="#navbar">Navbar</a>
+            <a class="list-group-item" href="#buttons">Buttons</a>
+            <a class="list-group-item" href="#typography">Typography</a>
+            <a class="list-group-item" href="#tables">Tables</a>
+            <a class="list-group-item" href="#forms">Forms</a>
+            <a class="list-group-item" href="#navs">Navs</a>
+            <a class="list-group-item" href="#indicators">Indicators</a>
+            <a class="list-group-item" href="#progress-bars">Progress bars</a>
+            <a class="list-group-item" href="#containers">Containers</a>
+            <a class="list-group-item" href="#dialogs">Dialogs</a>
+          </div>
+        </div>
+        <div class="col-lg-10 col-md-9 col-sm-12">
+          <h3>Trending</h3>
+          <br>
+          <div class="col-lg-3">
+            <div class="panel panel-default">
+              <div class="panel-body">
+                Panel content
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="pull-right">
+        <ul class="pagination">
+          <li class="disabled"><a href="#">&laquo;</a></li>
+          <li class="active"><a href="#">1</a></li>
+          <li><a href="#">2</a></li>
+          <li><a href="#">3</a></li>
+          <li><a href="#">4</a></li>
+          <li><a href="#">5</a></li>
+          <li><a href="#">&raquo;</a></li>
+        </ul>
+      </div>
+    </section><!--/wrapper -->
+</section><!-- /MAIN CONTENT -->
+
+<!--main content end-->
