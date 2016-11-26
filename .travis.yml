@@ -5,13 +5,22 @@ python:
 
 # Dependencies Installation
 install:
-  - "pip install -r requirements.txt"
-  - "pip install coveralls"
+  - pip install -r requirements/test.txt
+  - pip install coveralls
 
 # Testing
 script:
-  - "coverage run manage.py test"
+  coverage run manage.py test
 
 # Coveralls
 after_success:
-  -"Coveralls"
+  Coveralls
+
+# Env variables
+env:
+  - ENV=TEST
+
+# Slack
+notifications:
+  slack: apipanda:UNJdlVzsjpL85Aw6dys1hZZE
+

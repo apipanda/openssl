@@ -2,6 +2,9 @@
 logs
 *.log
 npm-debug.log*
+.DS_Store
+
+brr
 
 # Runtime data
 pids
@@ -17,9 +20,10 @@ coverage
 
 # Grunt intermediate storage (http://gruntjs.com/creating-plugins#storing-task-files)
 .grunt
-.py[cod]
-.pyc
 
+# Python compiled files
+*py[cod]
+.DS_Store
 # node-waf configuration
 .lock-wscript
 
@@ -31,6 +35,19 @@ node_modules
 
 # Optional npm cache directory
 .npm
-
+package_conf.py
 # Optional REPL history
 .node_repl_history
+
+# Ignore Certificate files
+*.pem
+*.cert
+*.key
+# Html coverage directory
+htmlcov
+tmp
+.env
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml

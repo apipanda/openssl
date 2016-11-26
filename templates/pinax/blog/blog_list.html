@@ -1,0 +1,50 @@
+{% extends "common/base.html" %}
+{% load static from staticfiles %}
+{% load extra_tags %}
+
+{% block page %}
+
+    <!-- Page Header -->
+    <!-- Set your background image for this header on the line below. -->
+    <header class="intro-header"  style="background-image: url('{% static "images/ssl.jpg" %}'); opacity: 0.85">
+        <div style="background:rgba(0,0,0,0.9)">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="site-heading">
+                        <h1>Blog</h1>
+                        <hr class="small">
+                        <span class="subheading">Latest information on SSL/TLS, Web Security and more...</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div data-ng-repeat="(key, postData) in vm.postList">
+                <div class="post-preview" data-ng-init="post = postData.fields">
+                    <a href="">
+                        <h3 class="post-title" data-ng-bind="post.title"></h3>
+                        <h4 class="post-subtitle" data-ng-bind-html="post.teaser_html"></h4>
+                    </a>
+                    <p class="post-meta">Shared by <a href="">Bernard</a> on <span data-ng-bind="post.published | date:mediumDate"></span></p>
+                </div>
+                <hr>
+                </div>
+                <!-- Pager -->
+                <ul class="pager">
+                    <li class="next">
+                        <a href="#">Older Posts &rarr;</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <hr class="divider">
+    <script>
+        window.postList = JSON.parse("{{post_list|json}}");
+    </script>
+{% endblock page %}

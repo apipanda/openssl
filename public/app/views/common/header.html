@@ -1,0 +1,49 @@
+{% load static from staticfiles %}
+{% block header %}
+    <!-- Navigation -->
+    <nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
+                    <i class="fa fa-bars"></i>
+                </button>
+                <a class="navbar-brand page-scroll" href="/">
+                    <img src="{% static 'images/logo.png' %}" alt="" style="max-height:40px; margin-top:-10px" class="img-responsive pull-left"> &nbsp;<span class="light">Open</span>SSL<small>.io</small>
+                </a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse navbar-right navbar-main-collapse">
+                <ul class="nav navbar-nav">
+                    <!-- Hidden li included to remove active class from about link when scrolled up past about section -->
+                    <li class="hidden">
+                        <a href="/"></a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="/start#about">About</a>
+                    </li>
+                    <li>
+                        <a href="/blog">Blog</a>
+                    </li>
+                    <li>
+                        <a href="mailto:support@apipanda.com">Contact</a>
+                    </li>
+                    <li>
+                        <a href="/login">Login</a>
+                    </li>
+                    <li>
+                        <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+                            <input type="hidden" name="cmd" value="_s-xclick">
+                            <input type="hidden" name="hosted_button_id" value="5ZLMW7UE45CKA">
+                            <input type="image" class="nav-img" src="http://www.pngall.com/wp-content/uploads/2016/05/PayPal-Donate-Button-PNG-HD.png" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+                            <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+                        </form>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+{% endblock header %}

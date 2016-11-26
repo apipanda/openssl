@@ -1,0 +1,170 @@
+{% extends "common/base.html" %}
+{% load static from staticfiles %}
+
+{% block page %}
+<!--main content start-->
+<section class="container">
+    <section class="row content-section">
+      <div class="row mt">
+        <div class="container">
+          <div class="col-lg-12">
+            <div class="jumbotron">
+                  <div class="form-group">
+                        <form name="domainForm" data-ng-submit="whois()">
+                            <div class="alert alert-warning" data-ng-show="warn">
+                                <span><b data-ng-bind="status">  </b> <span data-ng-bind="warn"></span></span>
+                            </div>
+                            <div class="alert alert-danger" data-ng-show="error">
+                                <span><b data-ng-bind="status"></b> <span data-ng-bind="error"></span></span>
+                            </div>
+                            <div class="input-group">
+                                <input type="text" class="form-control search" placeholder="Enter your domain name (eg: apipanda.com)" data-ng-model="domain" data-ng-disabled="disableBtn" data-ng-focus="warn=null; error=null">
+                                <span class="input-group-btn">
+                                  <button class="btn btn-flat search" data-ng-disabled="disableBtn || !!!domain" type="submit"><span >Get Started</span><span data-ng-show="disableBtn"><i class="fa fa-spin fa-spinner" class="#fff"></i></span></button>
+                                </span>
+                            </div>
+                        </form>
+                  </div>
+               </div>
+               <address>
+                  <strong data-ng-bind="domainData.org || domainData.name"></strong> <i class="fa fa-check-circle" style="color: royalblue"></i> <small><code>Whois record verified.</code></small><i class="fa fa-check-circle" style="color: seagreen"></i> <small><code>Domain Ownership verified.</code></small><br>
+                  <span data-ng-bind="domainData.address"></span><br>
+                  <span data-ng-bind="domainData.city"></span>, <span data-ng-bind="domainData.state"></span> <span data-ng-bind="domainData.zipcode"></span>,<br>
+                  <span data-ng-bind="domainData.country"></span>. <br>
+                    <span data-ng-repeat="(key, value) in domainData.emails">
+                        <abbr style="cursor:pointer" title="Email{$key$}" data-ng-bind="value"></abbr> <br>
+                    </span>
+                </address>
+            </div>
+        </div>
+
+      <div class="row container">
+            <hr>
+                <h4>Verify Domain Ownership</h4>
+            <hr>
+            <div class="container">
+                <div>
+                    <p>We verify that you own your domain — that’s your business web address, like yourcompany.com — to ensure that no one else claims ownership or generates certificates without your permission.</p>
+                </div>
+                <div>
+                    <p>To verify your domain, select a verification option from below.</p>
+                </div>
+            </div>
+            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+              <div class="panel panel-default">
+                <div class="panel-heading" data-toggle="collapse" role="button" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne" id="headingOne">
+                  <h4 class="panel-title">
+                    <a >
+                      Verify With <code>TXT Record</code>
+                    </a>
+                    <i class="fa pull-right fa-arrow-down" aria-hidden="true"></i>
+                  </h4>
+                </div>
+                <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                  <div class="panel-body">
+                    <div>
+                        <aside>To verify ownership of your domain, you'll need to sign in to your domain host, which is most likely the service you used to buy your domain name.</aside>
+                    </div>
+                    <div>
+                        <ol>
+                            <li>Sign in to your domain's host account.</li>
+                            <li>Locate the page for updating your domain's DNS records.<br><small>The page might be called something like DNS Zone File, Name Server Management, or Advanced Settings.</small> </li>
+                            <li>Create a new <code>TXT record</code> and set it to this value: <br><code>openssl-domain-verification=<span data-ng-bind="domainData.uuid"></span></code>.
+                            </li>
+                            <li>Click the Verify button below.</li>
+                        </ol>
+                        <button class="btn btn-primary pull-right" data-ng-click="verify('T')" data-ng-disabled="disableBtn">Verify</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="panel panel-default">
+                <div class="panel-heading" data-toggle="collapse" role="button" data-parent="#accordion" href="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo" id="headingTwo">
+                  <h4 class="panel-title">
+                    <a >
+                      Verify With <code>CNAME Record</code>
+                    </a>
+                    <i class="fa pull-right fa-arrow-down" aria-hidden="true"></i>
+                  </h4>
+                </div>
+                <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                  <div class="panel-body">
+                    <div>
+                        <aside>To verify ownership of your domain, you'll need to sign in to your domain host, which is most likely the service you used to buy your domain name. You add CNAME records using the administration tools at your domain host. The exact steps for your host might vary. Below you can find generic steps that apply for any host as well as specific instructions for several popular hosts.</aside> <br> <small>
+                        <em>Adding a <code>CNAME record</code> does not disrupt your current mailflow or affect other services. <br><strong><code>CNAME</code> record changes can take up to 72 hours to go into effect, but typically they happen much sooner.</strong></em> </small> <br> <br>
+                    </div>
+                    <div>
+                        <ol>
+                            <li>Sign in to your domain's account at your domain host.</li>
+                            <li>Locate the page for updating your domain's DNS records.<br><small>The page might be called something like DNS Zone File, Name Server Management, or Advanced Settings.</small></li>
+                            <li>Locate the CNAME records for your domain.</li>
+                            <li>Add a CNAME record with the <code>Name/Alias/Host</code> value set to <strong><code><span data-ng-bind="domainData.cname"></span>.<span data-ng-bind="domainData.host"></span></code></strong> and the <code>Value/Destination/Answer</code> field set to <strong><code>openssl.io</code></strong>.
+                            <li>Save your changes and wait until they take effect.</li>
+                            <li>Click the Verify button below.</li>
+                        </ol>
+                        <button class="btn btn-primary pull-right">Verify</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="panel panel-default">
+                <div class="panel-heading" data-toggle="collapse" role="button" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree" id="headingThree">
+                  <h4 class="panel-title">
+                    <a >
+                      <code>Upload file</code> to your webserver
+                    </a>
+                    <i class="fa pull-right fa-arrow-down" aria-hidden="true"></i>
+                  </h4>
+                </div>
+                <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                  <div class="panel-body">
+                    <div>
+                        <aside>You can verify your domain ownership by uploading an HTML file to your domain’s website. When you upload the HTML file to your web server, we check that it’s there. Uploading the file doesn’t affect your website.</aside> <br><small>
+                        <em>The HTML file must be available at your naked domain, which means it doesn’t have www in the URL. For example, <code>http://yourdomain.com/yourfile.html</code> is a naked domain. <br>The HTML file must be publicly available and not limited to an internal network (an intranet, for example).</em> </small> <br>
+                        <strong>Note: Do not rename your HTML file or we won’t recognize it when we look for it.</strong> <br><br>
+                        <ol>
+                            <li><a href="/domains/media/{[domainData.cname]}.html" target="_blank">Download</a> your HTML verification file</li>
+                            <li>Upload the HTML file to the root folder (top-level folder) of your domain’s web server. The root folder's name can vary by hosting provider—it's typically <code>public_html, www, or wwwroot</code>. <br><em><strong>Note: </strong>Do not upload the HTML file to a subfolder. The file must be visible at <a href="http://{[domainData.host]}/{[domainData.cname]}.html" target="_blank">http://<span data-ng-bind="domainData.host"></span>/<span data-ng-bind="domainData.cname"></span>.html</a></em>.</li>
+                            <li>Open a new browser window and navigate to <a href="http://{[domainData.host]}/{[domainData.cname]}.html" target="_blank">http://<span data-ng-bind="domainData.host"></span>/<span data-ng-bind="domainData.cname"></span>.html</a> <br> <em><strong>Note: </strong> If the file uploaded correctly, you'll see in your browser <code>openssl-domain-verification=<span data-ng-bind="domainData.uuid"></span></code>.</em></li>
+                            <li>Click the Verify button below.</li>
+                        </ol>
+                        <button class="btn btn-primary pull-right">Verify</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="panel panel-default">
+                <div class="panel-heading" data-toggle="collapse" role="button" data-parent="#accordion" href="#collapseFour" aria-expanded="true" aria-controls="collapseFour" id="headingFour">
+                  <h4 class="panel-title">
+                    <a >
+                      Add <code>META TAG</code> to your homepage
+                    </a>
+                    <i class="fa pull-right fa-arrow-down" aria-hidden="true"></i>
+                  </h4>
+                </div>
+                <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
+                  <div class="panel-body">
+                    <div>
+                        <aside>We will give you a meta tag containing a verification code to paste into the <head> section of your website’s homepage. Visitors to your website won't see the meta tag, but we can check that it's there.</aside> <br><small>
+                        <em>The HTML file must be available at your naked domain, which means it doesn’t have www in the URL. For example, <code>http://yourdomain.com/</code> is a naked domain. <br>The website must be publicly available and not limited to an internal network (an intranet, for example).</em> </small> <br>
+                        <strong>Note: Do not rename your HTML file or we won’t recognize it when we look for it.</strong> <br><br>
+                        <ol>
+                            <li>Open your website homepage HTML file using any text or HTML editor. If your web host uses a web-based page editor (Squarespace, Wix, WordPress.com, and so on), open your homepage in their editor.</li>
+                            <li>Paste this meta tag <code>&lt;meta name="openssl-domain-verification" content="openssl-domain-verification=<span data-ng-bind="domainData.uuid"></span>" /&gt;</code> into the <code>&lt;head&gt;</code> section that’s before the first <code>&lt;body&gt;</code> section. If you’re unsure how to add meta tags with a web-based page editor, contact your web host’s technical support.</li>
+                            <li>Save the changes to your home page. If you edited the file offline, upload it to your web server, overwriting the previous homepage file.</li>
+                            <li>Click the Verify button below.</li>
+                        </ol>
+                        <button class="btn btn-primary pull-right">Verify</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+      </div>
+      </div>
+    </section><!--/wrapper -->
+</section><!-- /MAIN CONTENT -->
+
+<!--main content end-->
+
+{% endblock page %}
