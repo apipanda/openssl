@@ -84,10 +84,10 @@ class DomainResource(Resource):
 
         data = json.loads(request.body)
         host = data.get('host')
-
         try:
             domain = whois.whois(host)
 
+            print(domain)
             uuid_hex = uuid.uuid3(uuid.NAMESPACE_URL, str(host))
             domain_uuid = base64.b64encode(uuid_hex.get_hex())
             cname_domain = base64.urlsafe_b64encode(host.lower())
