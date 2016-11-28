@@ -1,0 +1,10 @@
+branch-defaults:
+  dev:
+    environment: null
+global:
+  application_name: openssl
+  default_ec2_keyname: openssl
+  default_platform: Python 2.7
+  default_region: null
+  profile: null
+  sc: git

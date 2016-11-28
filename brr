@@ -1,0 +1,30 @@
+Enter Domain
+    Verify domain is registered
+Verify Ownership
+    TXT record
+    CNAME
+    Upload file to web server
+
+Create Account
+    First Name
+    Last Name
+    Email
+    Password
+    Server Software
+    Gmail/OpenID
+
+Generate Certificate
+    Download/Copy
+
+Installation guide
+    Cpanel
+    Heroku
+    Bluemix
+    Google Cloud Platform
+    AWS
+    Digital Ocean
+    Nginx
+
+    Apache
+
+Blog

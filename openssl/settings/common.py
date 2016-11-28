@@ -18,6 +18,17 @@ load_dotenv(find_dotenv())
 
 SITE_ID = 1
 
+# Quick-start development settings - unsuitable for production
+# See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
+
+# SECURITY WARNING: keep the secret key used in production secret!
+SECRET_KEY = os.getenv('SECRET_KEY', '3l1ax1(0u1e$^iavnx^a_y7w9ivr+rix*nr_w#tug#h($p5fmp')
+
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = True
+
+ALLOWED_HOSTS = []
+
 ADMINS = [
     ('Bernard', 'bernard@apipanda.com'),
 ]
