@@ -7,6 +7,7 @@ RUN apt-get -y update && apt-get install curl -y
 RUN echo 'Setting environment variables'
 ENV SECRET_KEY=Bf8pGXxpQ4SAMU+guCFg4t6M1Wd/JLPDSzLVc5hR
 ENV PORT=5555
+ENV PY_ENV=production
 
 
 RUN echo 'Install PIP'
