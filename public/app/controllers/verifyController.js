@@ -16,13 +16,16 @@ app.controller("VerifyController", [
         var expression = /[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/gi;
         var regex = new RegExp(expression);
 
-        function init () {
+        function init() {
             // body...
             $scope.domainData = $localStorage.domain;
             console.log($scope.domainData);
         }
 
-        $scope.whois = function () {
+
+        $scope.whois = function (forced) {
+            forced = !!forced;
+
             $scope.error = null;
             $scope.warn = null;
             $scope.status = null;
@@ -34,7 +37,8 @@ app.controller("VerifyController", [
                 var data = ($.url($scope.domain)).attr();
                 var requestUrl = domainBase + whoisUrl;
                 data.base = data.protocol ? data.base : 'http://' + data.base;
-                console.log($scope.domain, data);
+                data.forced = forced;
+
                 Request.fetch(requestUrl, data)
                     .then(function (response) {
                         // body...
@@ -43,14 +47,14 @@ app.controller("VerifyController", [
                             $scope.status = response.status + ' -';
                         }
                         $localStorage.domain = response.data;
-                        $scope.domainData = $localStorage.domain;
 
                         $location.path('/verify');
 
                     }, function (error) {
                         // body...
-                        $scope.error = error.statusText + ". We've notified the developers.";
-                        $scope.status = error.status + ' -';
+                        console.log(error);
+                        $scope.error = "We cannot verify your domain at this time.";
+                        // $scope.status = error.status + ' -';
                     });
             }
 
