@@ -83,6 +83,7 @@ class DomainResource(Resource):
         self.method_check(request, ['post'])
 
         data = json.loads(request.body)
+        print(data)
         host = data.get('host')
         try:
             domain = whois.whois(host)
@@ -104,16 +105,23 @@ class DomainResource(Resource):
                     "data": domain
                 }
             else:
-                expiration_date = (lambda d: d.expiration_date if isinstance(
-                    d.expiration_date, str) else min(d.expiration_date))(domain)
+                if not data.get('forced'):
+                    expiration_date = (lambda d: d.expiration_date if isinstance(
+                        d.expiration_date, str) else min(d.expiration_date))(domain)
 
-                if datetime.now() > expiration_date:
-                    resp = {
-                        "success": False,
-                        "status": 418,
-                        "message": "Your Domain name has expired.",
-                        "data": domain
-                    }
+                    if datetime.now() > expiration_date:
+                        resp = {
+                            "success": False,
+                            "status": 418,
+                            "message": "Your Domain name has expired.",
+                            "data": domain
+                        }
+                    else:
+                        resp = {
+                            "success": True,
+                            "message": "Whois record exist.",
+                            "data": domain
+                        }
                 else:
                     resp = {
                         "success": True,
