@@ -1,7 +1,7 @@
+{% extends "common/base.html" %}
 {% load static from staticfiles %}
 
-{% include "common/header.html" %}
-{% include "common/footer.html" %}
+{% block page %}
 <!--main content start-->
 <section class="main-content">
     <section class="wrapper site-min-height">
@@ -66,3 +66,4 @@
 </section><!-- /MAIN CONTENT -->
 
 <!--main content end-->
+{% endblock %}

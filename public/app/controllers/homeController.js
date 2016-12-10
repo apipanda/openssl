@@ -26,7 +26,7 @@ app.controller("HomeController", [
                 var requestUrl = domainBase + whoisUrl;
                 data.base = data.protocol ? data.base : 'http://' + data.base;
                 data.forced = forced;
-
+                console.log(data)
                 Request.fetch(requestUrl, data)
                     .then(function (response) {
                         // body...

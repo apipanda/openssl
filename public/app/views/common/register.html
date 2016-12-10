@@ -15,18 +15,18 @@
                     <h4 class="title">Create Account</h4>
                 </div>
                 <div class="content">
-                    <form>
+                    <form data-ng-submit="register()">
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>First Name</label>
-                                    <input type="text" class="form-control" placeholder="First Name">
+                                    <input type="text" class="form-control" placeholder="First Name" data-ng-model="data.first_name">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Last Name</label>
-                                    <input type="text" class="form-control" placeholder="Last Name">
+                                    <input type="text" class="form-control" placeholder="Last Name" data-ng-model="data.last_name">
                                 </div>
                             </div>
                         </div>
@@ -35,7 +35,7 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="exampleInputEmail">Email Address</label>
-                                    <input type="email" class="form-control" placeholder="Email">
+                                    <input type="email" class="form-control" placeholder="Email" data-ng-model="data.email">
                                 </div>
                             </div>
                         </div>
@@ -43,7 +43,7 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="exampleInputPassword">Password</label>
-                                    <input type="password" class="form-control" placeholder="password">
+                                    <input type="password" class="form-control" placeholder="password" data-ng-model="data.password">
                                 </div>
                             </div>
                         </div>
