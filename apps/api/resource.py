@@ -83,18 +83,20 @@ class DomainResource(Resource):
         self.method_check(request, ['post'])
 
         data = json.loads(request.body)
-        print(data)
         host = data.get('host')
         try:
             domain = whois.whois(host)
 
-            print(domain)
             uuid_hex = uuid.uuid3(uuid.NAMESPACE_URL, str(host))
             domain_uuid = base64.b64encode(uuid_hex.get_hex())
             cname_domain = base64.urlsafe_b64encode(host.lower())
 
             domain.update(uuid=domain_uuid,
-                          cname=cname_domain.lower(), host=host)
+                          cname=cname_domain.lower(),
+                          host=host,
+                          base=data.get('base'))
+
+            # print(domain)
             domain_obj = Domain.objects.filter(domain_name=host).last()
 
             if domain_obj:
@@ -128,7 +130,8 @@ class DomainResource(Resource):
                         "message": "Whois record exist.",
                         "data": domain
                     }
-
+                    
+            print(resp, 'here')
             return self.create_response(request, resp, HttpAccepted)
 
         except Exception, e:
@@ -138,10 +141,8 @@ class DomainResource(Resource):
 
     def verify(self, request, *args, **kwargs):
         self.method_check(request, ['post'])
-        verification_options = {
-            'C': 'CNAME',
-            'T': 'TXT'
-        }
+        verification_options = settings.DOMAIN_VERIFICATION_OPTIONS
+        print(dir(verification_options))
         data = json.loads(request.body)
         host = data.get('host')
         base = data.get('base')
