@@ -11,7 +11,9 @@ app.controller("HomeController", [
         var expression = /[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/gi;
         var regex = new RegExp(expression);
 
-        $scope.whois = function () {
+        $scope.whois = function (forced) {
+            forced = !!forced;
+
             $scope.error = null;
             $scope.warn = null;
             $scope.status = null;
@@ -23,7 +25,8 @@ app.controller("HomeController", [
                 var data = ($.url($scope.domain)).attr();
                 var requestUrl = domainBase + whoisUrl;
                 data.base = data.protocol ? data.base : 'http://' + data.base;
-                // console.log($scope.domain, data);
+                data.forced = forced;
+
                 Request.fetch(requestUrl, data)
                     .then(function (response) {
                         // body...
@@ -38,12 +41,13 @@ app.controller("HomeController", [
                     }, function (error) {
                         // body...
                         console.log(error);
-                        $scope.error = error.statusText + ". We've notified the developers.";
-                        $scope.status = error.status + ' -';
+                        $scope.error = "We cannot verify your domain at this time.";
+                        // $scope.status = error.status + ' -';
                     });
             }
 
             $scope.disableBtn = false;
 
         };
+
     }]);
