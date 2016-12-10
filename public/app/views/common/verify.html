@@ -8,7 +8,7 @@
       <div class="row mt">
         <div class="container">
           <div class="col-lg-12">
-            <div class="jumbotron">
+            <!--<div class="jumbotron">
                   <div class="form-group">
                         <form name="domainForm" data-ng-submit="whois()">
                             <div class="alert alert-warning" data-ng-show="warn">
@@ -25,10 +25,10 @@
                             </div>
                         </form>
                   </div>
-               </div>
-               <address>
-                  <strong data-ng-bind="domainData.org || domainData.name"></strong> <i class="fa fa-check-circle" style="color: royalblue"></i> <small><code>Whois record verified.</code></small><i class="fa fa-check-circle" style="color: seagreen"></i> <small><code>Domain Ownership verified.</code></small><br>
-                  <span data-ng-bind="domainData.address"></span><br>
+               </div> -->
+               <address data-ng-if="domainData.domain_name">
+                  <strong data-ng-bind="domainData.org || domainData.name"></strong> <i class="fa fa-check-circle" style="color: royalblue"></i> <small><code>Whois record verified.</code></small><span data-ng-if="verified"><i class="fa fa-check-circle" style="color: seagreen"></i> <small><code>Domain Ownership verified.</code></small></span><br>
+                  Address<span data-ng-bind="domainData.address"></span><br>
                   <span data-ng-bind="domainData.city"></span>, <span data-ng-bind="domainData.state"></span> <span data-ng-bind="domainData.zipcode"></span>,<br>
                   <span data-ng-bind="domainData.country"></span>. <br>
                     <span data-ng-repeat="(key, value) in domainData.emails">
@@ -39,8 +39,8 @@
         </div>
 
       <div class="row container">
-            <hr>
-                <h4>Verify Domain Ownership</h4>
+            <hr data-ng-if="domainData">
+                <h4>Verify <strong class="code" style="text-decoration: underline;" data-ng-bind="domainData.host"></strong> </h4>
             <hr>
             <div class="container">
                 <div>
