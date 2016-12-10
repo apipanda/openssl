@@ -70,7 +70,7 @@ app.controller("VerifyController", [
             var requestUrl = domainBase + verifyUrl;
             var data = $scope.domainData;
             data.verification_type = type;
-            // console.log($scope.domain, data);
+            console.log(data);
             Request.fetch(requestUrl, data)
                 .then(function (response) {
                     // body...

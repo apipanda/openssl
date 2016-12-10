@@ -28,7 +28,7 @@
                </div> -->
                <address data-ng-if="domainData.domain_name">
                   <strong data-ng-bind="domainData.org || domainData.name"></strong> <i class="fa fa-check-circle" style="color: royalblue"></i> <small><code>Whois record verified.</code></small><span data-ng-if="verified"><i class="fa fa-check-circle" style="color: seagreen"></i> <small><code>Domain Ownership verified.</code></small></span><br>
-                  Address<span data-ng-bind="domainData.address"></span><br>
+                  <span data-ng-bind="domainData.address"></span><br>
                   <span data-ng-bind="domainData.city"></span>, <span data-ng-bind="domainData.state"></span> <span data-ng-bind="domainData.zipcode"></span>,<br>
                   <span data-ng-bind="domainData.country"></span>. <br>
                     <span data-ng-repeat="(key, value) in domainData.emails">

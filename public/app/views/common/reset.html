@@ -6,15 +6,16 @@
 <div class="container">
     <div class="row content-section">
 
-        <div class="modal-dialog form-login">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <a href="/"><button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-home"></i></button> </a>
+        <div class="col-lg-8 col-lg-offset-2 form-login">
+            <div class="card">
+                <div class="header">
                     <h4 class="modal-title">Forgot Password ?</h4>
                 </div>
+                <br>
                 <div class="alert alert-danger alert-dismissable" ng-show="message" style="border-radius: 0px">
-                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                <strong ng-bind="errCode"></strong> <p ng-bind="message"></p>
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true" data-ng-show="message">&times;</button>
+                    <strong ng-bind=""></strong>
+                    <p ng-bind="message"></p>
                 </div>
                 <div class="modal-body">
                     <p>Enter your e-mail address below to reset your password.</p>
@@ -23,7 +24,7 @@
                 </div>
                 <div class="modal-footer">
                     <button data-dismiss="modal" class="btn btn-theme" type="button">Cancel</button>
-                    <button class="btn btn-default" type="button">Submit</button>
+                    <button class="btn btn-primary" type="button">Submit</button>
                 </div>
             </div>
         </div>
