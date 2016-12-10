@@ -1,6 +1,9 @@
 Enter Domain
     Verify domain is registered
-Verify Ownership
+
+Blog
+
+> Verify Ownership
     TXT record
     CNAME
     Upload file to web server
@@ -26,5 +29,3 @@ Installation guide
     Nginx
 
     Apache
-
-Blog
