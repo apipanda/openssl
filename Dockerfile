@@ -13,7 +13,9 @@ ENV PY_ENV=production
 RUN echo 'Install PIP'
 RUN curl https://bootstrap.pypa.io/get-pip.py | python $1
 
+WORKDIR /var/www/app
 COPY . 
 
 RUN echo 'Expose docker port'
 EXPOSE 5555
+EXPOSE 443
