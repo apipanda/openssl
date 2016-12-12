@@ -9,7 +9,7 @@ app.controller("RegisterController", [
     function ($scope, $location, $log, $localStorage, $sessionStorage, $rootScope, Request) {
         'use strict';
 
-        if (!$localStorage.domain) {
+        if (!$localStorage.domain && !$localStorage.verified) {
             $location.path('/login');
         };
 
@@ -18,7 +18,7 @@ app.controller("RegisterController", [
         $scope.register = function () {
             $scope.message = null;
             console.log($scope.data);
-            $scope.data.domain = $localStorage.domain.host;
+            $scope.data.domain = $localStorage.domain;
             var errCode;
             Request.fetch('users', $scope.data)
                 .then(function (res) {
