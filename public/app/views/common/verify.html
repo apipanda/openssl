@@ -102,7 +102,7 @@
                             <li>Save your changes and wait until they take effect.</li>
                             <li>Click the Verify button below.</li>
                         </ol>
-                        <button class="btn btn-primary pull-right">Verify</button>
+                        <button class="btn btn-primary pull-right" data-ng-click="verify('C')">Verify</button>
                     </div>
                   </div>
                 </div>
@@ -128,7 +128,7 @@
                             <li>Open a new browser window and navigate to <a href="http://{[domainData.host]}/{[domainData.cname]}.html" target="_blank">http://<span data-ng-bind="domainData.host"></span>/<span data-ng-bind="domainData.cname"></span>.html</a> <br> <em><strong>Note: </strong> If the file uploaded correctly, you'll see in your browser <code>openssl-domain-verification=<span data-ng-bind="domainData.uuid"></span></code>.</em></li>
                             <li>Click the Verify button below.</li>
                         </ol>
-                        <button class="btn btn-primary pull-right">Verify</button>
+                        <button class="btn btn-primary pull-right" data-ng-click="verify('F')">Verify</button>
                     </div>
                   </div>
                 </div>
@@ -154,7 +154,7 @@
                             <li>Save the changes to your home page. If you edited the file offline, upload it to your web server, overwriting the previous homepage file.</li>
                             <li>Click the Verify button below.</li>
                         </ol>
-                        <button class="btn btn-primary pull-right">Verify</button>
+                        <button class="btn btn-primary pull-right" data-ng-click="verify('M')">Verify</button>
                     </div>
                   </div>
                 </div>
