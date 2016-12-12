@@ -48,6 +48,7 @@ app.controller("VerifyController", [
                         }
                         $localStorage.domain = response.data;
 
+
                         $location.path('/verify');
 
                     }, function (error) {
@@ -61,36 +62,38 @@ app.controller("VerifyController", [
             $scope.disableBtn = false;
 
         };
-
-        init();
-
         $scope.verify = function (type) {
 
             $scope.disableBtn = true;
             var requestUrl = domainBase + verifyUrl;
             var data = $scope.domainData;
             data.verification_type = type;
-            console.log(data);
+
             Request.fetch(requestUrl, data)
                 .then(function (response) {
                     // body...
-                    if (!response.success) {
+                    if (!response.data.success) {
                         $scope.warn = response.message;
                         $scope.status = response.status + ' -';
+                    } else {
+                        console.log(response);
+                        $localStorage.verified = response.data.success;
+                        console.log(response);
+                        $location.path('/signup');
                     }
-                    $localStorage.domain = response.data;
-                    $scope.domainData = $localStorage.domain;
-
-                    $location.path('/verify');
 
                 }, function (error) {
                     // body...
-                    $scope.error = error.statusText + ". We've notified the developers.";
+                    console.log(error);
+                    alert('Cannot verify your domain name. Please try again');
+                    $scope.error = "We've notified the developers.";
                     $scope.status = error.status + ' -';
                 });
             $scope.disableBtn = false;
 
         }
+
+        init();
 
         $log.debug("Verify Controller Initialized");
     }]);
