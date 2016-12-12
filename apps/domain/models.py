@@ -37,3 +37,11 @@ class Domain(models.Model):
         if not self.slug:
             self.slug = (self.domain_name + self.tld).replace('.', '-')
         return super(Domain, self).save(*args, **kwargs)
+
+# {
+#     domain_name: data.domain_name || $localStorage.domain.host,
+#     domain_url: $localStorage.domain.host,,
+#     domain_registerer: data.register,
+#     support_email: (lambda emails: data.emails[0] if isinstance(emails, list) else emails)(data.emails),
+
+# }
