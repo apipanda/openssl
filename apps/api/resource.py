@@ -136,7 +136,7 @@ class DomainResource(Resource):
 
         except Exception, e:
             print(e)
-            return CustomBadRequest(code='whois_error',
+            raise CustomBadRequest(code='whois_error',
                                     message='Whois record verification error. Our developers have been notified.')
 
     def verify(self, request, *args, **kwargs):
@@ -191,7 +191,7 @@ class DomainResource(Resource):
             elif verification_option == 'F':
                 fp = urllib2.urlopen(base)
                 page = fp.read()
-                
+
                 if domain_uuid in page and DOMAIN_VERIFICATION_KEY in page:
                     resp = {
                         "success": True,
@@ -229,7 +229,7 @@ class DomainResource(Resource):
                                     message='Domain name verification error. Please check your DNS configurations. Meanwhile, our developers have been notified.')
         except Exception, e:
             print(e.message, 'here')
-            return CustomBadRequest(code='dns_error',
+            raise CustomBadRequest(code='dns_error',
                                     message='Domain name verification error. Please check your DNS configurations. Meanwhile, our developers have been notified.')
 
     class Meta(Resource.Meta):
@@ -276,39 +276,43 @@ class UserResource(Resource):
 
         for field in REQUIRED_REQUEST_FIELDS:
             if field not in bundle:
-                return CustomBadRequest(
+                raise CustomBadRequest(
                     success=False,
                     code="missing_key",
                     message="Must provide %s when "
                     "creating a user." % field)
 
-        REQUIRED_DOMAIN_FIELDS = ("name", "url", "domain_registrer")
+        REQUIRED_DOMAIN_FIELDS = ("domain_name", "domain_url", "verification_type")
 
         for field in REQUIRED_DOMAIN_FIELDS:
-            if field not in bundle['org']:
-                return CustomBadRequest(
+            if field not in bundle['domain']:
+                raise CustomBadRequest(
                     success=False,
                     code="missing_key",
                     message="Must provide %s when "
-                    "creating an Domain." % field)
+                    "creating an account." % field)
 
         try:
             email = bundle["email"]
             domain = bundle.pop('domain')
 
             if User.objects.filter(email=email):
-                return CustomBadRequest(
+
+                raise CustomBadRequest(
                     success=False,
                     code="duplicate_exception",
                     message="That email address is already in used.")
-            if Domain.objects.filter(domain_url=domain['url']):
+            if Domain.objects.filter(domain_url=domain['domain_url']):
 
-                return CustomBadRequest(
+                raise CustomBadRequest(
                     code="duplicate_exception",
                     message="The Domain you are "
                     "trying to create already exist.")
+            
+            # Slightly faster than pop
+            del bundle['source']
 
-            user = User.objects.create_user(username=email, **bundle)
+            user = User.objects.create_user(username=email, )
             user = authenticate(username=user.email,
                                 password=bundle['password'])
 
@@ -338,8 +342,9 @@ class UserResource(Resource):
                     }
                     return self.create_response(request, resp, HttpCreated)
 
-        except KeyError:
-            return CustomBadRequest()
+        except Exception, e:
+            print(e)
+            raise CustomBadRequest()
 
     def login(self, request, **kwargs):
 
@@ -377,12 +382,12 @@ class UserResource(Resource):
                         'message': 'Your account have being suspended.',
                     }, HttpForbidden)
             else:
-                return CustomBadRequest(
+                raise CustomBadRequest(
                     code='invalid_entry',
                     message='Incorrect username/password combination.'
                 )
         except KeyError:
-            return CustomBadRequest(
+            raise CustomBadRequest(
                 code='invalid_entry',
                 message='Incorrect username/password combination.'
             )
@@ -393,5 +398,5 @@ class UserResource(Resource):
             django_logout(request)
             return self.create_response(request, {'success': True})
         else:
-            return CustomBadRequest(code='invalid_request',
+            raise CustomBadRequest(code='invalid_request',
                                    message="You are not logged in.")
