@@ -12,7 +12,7 @@ class Domain(models.Model):
 
     domain_name = models.CharField(max_length=200)
     domain_url = models.CharField(max_length=200)
-    domain_registerer = models.CharField(max_length=200)
+    domain_registrar = models.CharField(max_length=200)
     support_email = models.EmailField(max_length=200)
     tld = models.CharField(max_length=200)
     slug = models.SlugField(max_length=100)
@@ -37,11 +37,3 @@ class Domain(models.Model):
         if not self.slug:
             self.slug = (self.domain_name + self.tld).replace('.', '-')
         return super(Domain, self).save(*args, **kwargs)
-
-# {
-#     domain_name: data.domain_name || $localStorage.domain.host,
-#     domain_url: $localStorage.domain.host,,
-#     domain_registerer: data.register,
-#     support_email: (lambda emails: data.emails[0] if isinstance(emails, list) else emails)(data.emails),
-
-# }
