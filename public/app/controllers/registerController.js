@@ -9,11 +9,24 @@ app.controller("RegisterController", [
     function ($scope, $location, $log, $localStorage, $sessionStorage, $rootScope, Request) {
         'use strict';
 
+        if (!$localStorage.domain && !$localStorage.verified) {
+            $location.path('/login');
+        };
+
         $scope.data = {};
 
         $scope.register = function () {
             $scope.message = null;
-            console.log($scope.data);
+            var data = $localStorage.domain
+            $scope.data.domain = {
+                domain_name: data.org || data.host,
+                domain_url: $localStorage.domain.host,
+                domain_registrar: data.registrar,
+                date_registered: data.creation_date,
+                expiration_date: data.expiration_date,
+                verification_type: data.verification_type
+            };
+
             var errCode;
             Request.fetch('users', $scope.data)
                 .then(function (res) {
@@ -23,10 +36,9 @@ app.controller("RegisterController", [
                     $rootScope.user = $localStorage.user;
                     $location.path('/dashboard')
                 }, function (error) {
-                    errCode = error.code.split('_').join(' ');
-                    $scope.errCode = errCode.substring(0,1).toUpperCase() + errCode.substring(1).toLowerCase() + "!";
+                    console.log(error);
                     $scope.message = error.message;
-                    console.log(errCode, $scope.errCode, $scope.message);
+
                 });
 
         }

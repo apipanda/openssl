@@ -12,7 +12,7 @@ class Domain(models.Model):
 
     domain_name = models.CharField(max_length=200)
     domain_url = models.CharField(max_length=200)
-    domain_registerer = models.CharField(max_length=200)
+    domain_registrar = models.CharField(max_length=200)
     support_email = models.EmailField(max_length=200)
     tld = models.CharField(max_length=200)
     slug = models.SlugField(max_length=100)

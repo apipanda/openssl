@@ -3,7 +3,8 @@ app.controller("ResetController", [
     "$location",
     "$log",
     function ($scope, $location, $log) {
-        'use strict';
+		'use strict';
+		$scope.message = false;
 
-        $log.debug("Reset Controller Initialized");
+		$log.debug("Reset Controller Initialized");
     }]);

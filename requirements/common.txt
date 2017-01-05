@@ -82,6 +82,7 @@ sorl-thumbnail==12.3
 sphinx-me==0.3
 ssh==1.8.0
 surlex==0.2.0
+tld==0.7.6
 unicodecsv==0.14.1
 waitress==0.9.0
 watchtower==0.2.0

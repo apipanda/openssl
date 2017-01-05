@@ -74,9 +74,9 @@ class DomainResource(Resource):
             url(r"^(?P<resource_name>%s)/whois%s$" %
                 (self._meta.resource_name, trailing_slash()),
                 self.wrap_view('get_whois'), name="whois"),
-            # url(r'^(?P<resource_name>%s)/confim%s$' %
-            #     (self._meta.resource_name, trailing_slash()),
-            #     self.wrap_view('logout'), name='api_logout'),
+            url(r'^(?P<resource_name>%s)/verify%s$' %
+                (self._meta.resource_name, trailing_slash()),
+                self.wrap_view('verify'), name='domain_verify'),
         ]
 
     def get_whois(self, request, *args, **kwargs):
@@ -87,13 +87,16 @@ class DomainResource(Resource):
         try:
             domain = whois.whois(host)
 
-            print(domain)
             uuid_hex = uuid.uuid3(uuid.NAMESPACE_URL, str(host))
             domain_uuid = base64.b64encode(uuid_hex.get_hex())
             cname_domain = base64.urlsafe_b64encode(host.lower())
 
             domain.update(uuid=domain_uuid,
-                          cname=cname_domain.lower(), host=host)
+                          cname=cname_domain.lower().replace('=', ''),
+                          host=host,
+                          base=data.get('base'))
+
+            print(domain)
             domain_obj = Domain.objects.filter(domain_name=host).last()
 
             if domain_obj:
@@ -104,62 +107,73 @@ class DomainResource(Resource):
                     "data": domain
                 }
             else:
-                expiration_date = (lambda d: d.expiration_date if isinstance(
-                    d.expiration_date, str) else min(d.expiration_date))(domain)
+                if not data.get('forced'):
+                    expiration_date = (lambda d: d.expiration_date if isinstance(
+                        d.expiration_date, str) else min(d.expiration_date))(domain)
 
-                if datetime.now() > expiration_date:
-                    resp = {
-                        "success": False,
-                        "status": 418,
-                        "message": "Your Domain name has expired.",
-                        "data": domain
-                    }
+                    if datetime.now() > expiration_date:
+                        resp = {
+                            "success": False,
+                            "status": 418,
+                            "message": "Your Domain name has expired.",
+                            "data": domain
+                        }
+                    else:
+                        resp = {
+                            "success": True,
+                            "message": "Whois record exist.",
+                            "data": domain
+                        }
                 else:
                     resp = {
                         "success": True,
                         "message": "Whois record exist.",
                         "data": domain
                     }
-
+                    
+            print(resp, 'here')
             return self.create_response(request, resp, HttpAccepted)
 
         except Exception, e:
             print(e)
-            return CustomBadRequest(code='whois_error',
+            raise CustomBadRequest(code='whois_error',
                                     message='Whois record verification error. Our developers have been notified.')
 
     def verify(self, request, *args, **kwargs):
         self.method_check(request, ['post'])
-        verification_options = {
-            'C': 'CNAME',
-            'T': 'TXT'
-        }
+
+        verification_options = dict(settings.DOMAIN_VERIFICATION_OPTIONS)
         data = json.loads(request.body)
         host = data.get('host')
         base = data.get('base')
         domain_uuid = data.get('uuid')
-        verification_option = data.get('type').upper()
+        verification_option = data.get('verification_type').upper()
 
         try:
             if verification_option == 'T':
-
-                query = dns.query(str(host), verification_options[
-                    verification_option])
+                print(verification_options[
+                    verification_option], host)
+                query = dns.query(str(host), 'TXT')
+                print(query.response)
                 for index, answer in enumerate(query.response.answer):
-                    if domain_uuid in answer:
+                    if domain_uuid in answer.to_text():
                         resp = {
                             "success": True,
                             "message": "Domain verification was successful.",
                             "data": data
                         }
                         return self.create_response(request, resp, HttpAccepted)
+                resp = {
+                    "success": False,
+                    "message": "Cannot verify your domain name. Please try again"
+                }
+                return self.create_response(request, resp, HttpAccepted)
 
             elif verification_option == 'C':
                 cname = data.get('cname')
                 app_domain = getattr(settings, 'HOST')
                 host = subdomain(cname, host)
-                query = dns.query(host, verification_options[
-                    verification_option])
+                query = dns.query(cname + '.' + host, 'CNAME')
                 for index, answer in enumerate(query.response.answer):
                     if app_domain in answer:
                         resp = {
@@ -168,10 +182,16 @@ class DomainResource(Resource):
                             "data": data
                         }
                         return self.create_response(request, resp, HttpAccepted)
+                resp = {
+                    "success": False,
+                    "message": "Cannot verify your domain name. Please try again"
+                }
+                return self.create_response(request, resp, HttpAccepted)
 
             elif verification_option == 'F':
                 fp = urllib2.urlopen(base)
                 page = fp.read()
+
                 if domain_uuid in page and DOMAIN_VERIFICATION_KEY in page:
                     resp = {
                         "success": True,
@@ -180,24 +200,36 @@ class DomainResource(Resource):
                     }
                     return self.create_response(request, resp, HttpAccepted)
 
+                resp = {
+                    "success": False,
+                    "message": "Cannot verify your domain name. Please try again"
+                }
+                return self.create_response(request, resp, HttpAccepted)
+
             elif verification_option == 'M':
                 fp = urllib2.urlopen(base)
-                soup = bs(fp)
+                soup = bs(fp, 'html.parser')
                 meta = soup.find(
                     'meta', attrs={'name': DOMAIN_VERIFICATION_KEY})
-                if domain_uuid in meta['content']:
+                if meta and domain_uuid in meta['content']:
                     resp = {
                         "success": True,
                         "message": "Domain verification was successful.",
                         "data": data
                     }
                     return self.create_response(request, resp, HttpAccepted)
+            
+                resp = {
+                    "success": False,
+                    "message": "Cannot verify your domain name. Please try again"
+                }
+                return self.create_response(request, resp, HttpAccepted)
 
-            return CustomBadRequest(code='dns_error',
+            raise CustomBadRequest(code='dns_error',
                                     message='Domain name verification error. Please check your DNS configurations. Meanwhile, our developers have been notified.')
         except Exception, e:
-            print(e)
-            return CustomBadRequest(code='dns_error',
+            print(e.message, 'here')
+            raise CustomBadRequest(code='dns_error',
                                     message='Domain name verification error. Please check your DNS configurations. Meanwhile, our developers have been notified.')
 
     class Meta(Resource.Meta):
@@ -250,33 +282,37 @@ class UserResource(Resource):
                     message="Must provide %s when "
                     "creating a user." % field)
 
-        REQUIRED_DOMAIN_FIELDS = ("name", "url", "domain_registrer")
+        REQUIRED_DOMAIN_FIELDS = ("domain_name", "domain_url", "verification_type")
 
         for field in REQUIRED_DOMAIN_FIELDS:
-            if field not in bundle['org']:
+            if field not in bundle['domain']:
                 raise CustomBadRequest(
                     success=False,
                     code="missing_key",
                     message="Must provide %s when "
-                    "creating an Domain." % field)
+                    "creating an account." % field)
 
         try:
             email = bundle["email"]
             domain = bundle.pop('domain')
 
             if User.objects.filter(email=email):
+
                 raise CustomBadRequest(
                     success=False,
                     code="duplicate_exception",
                     message="That email address is already in used.")
-            if Domain.objects.filter(domain_url=domain['url']):
+            if Domain.objects.filter(domain_url=domain['domain_url']):
 
                 raise CustomBadRequest(
                     code="duplicate_exception",
                     message="The Domain you are "
                     "trying to create already exist.")
+            
+            # Slightly faster than pop
+            del bundle['source']
 
-            user = User.objects.create_user(username=email, **bundle)
+            user = User.objects.create_user(username=email, )
             user = authenticate(username=user.email,
                                 password=bundle['password'])
 
@@ -306,7 +342,8 @@ class UserResource(Resource):
                     }
                     return self.create_response(request, resp, HttpCreated)
 
-        except KeyError:
+        except Exception, e:
+            print(e)
             raise CustomBadRequest()
 
     def login(self, request, **kwargs):

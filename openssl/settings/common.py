@@ -25,7 +25,7 @@ SITE_ID = 1
 SECRET_KEY = os.getenv('SECRET_KEY', '3l1ax1(0u1e$^iavnx^a_y7w9ivr+rix*nr_w#tug#h($p5fmp')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv('PY_ENV', True)
 
 ALLOWED_HOSTS = []
 
