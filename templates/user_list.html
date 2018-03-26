@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% block title %}Insights - Users{% endblock %}
+
+{% block wrapper %}
+
+    <!-- page header -->
+    <div class="page-header">
+        <h1>Users {% if followed %} <small>Followed By {{ user.username }}</small>{% endif %}</h1>
+    </div>
+    <!-- end page header -->
+
+    <!-- table list -->
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <i class="fa fa-users fa-lg"></i> Users
+                </div>
+                <div class="panel-body">
+                    <ul class="nav nav-tabs">
+                        <li{% if followed %} class="active"{% endif %}><a href="{{ url_for('main.users', username = user.username) }}">Followed By {{ user.username }}</a></li>
+                        <li{% if not followed %} class="active"{% endif %}><a href="{{ url_for('main.users', username = user.username, followed = 0) }}">All Users</a></li>
+                    </ul>
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Username</th>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Location</th>
+                                    {% if followed %}<th>Following Since</th>{% endif %}
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {% for u in users %}
+                            <tr>
+                                <td>
+                                    {{ loop.index }}
+                                </td>
+                                <td>
+                                    <a href="{{ url_for('main.user', username = u.user.username) }}">
+                                        {{ u.user.username }}
+                                    </a>
+                                </td>
+                                <td>
+                                    <a href="{{ url_for('main.user', username = u.user.username) }}">
+                                        {{ u.user.name }}
+                                    </a>
+                                </td>
+                                <td>
+                                    {{ u.user.email }}
+                                </td>
+                                <td>
+                                    {{ u.user.location }}
+                                </td>
+                                {% if followed %}
+                                <td>
+                                    {{ moment(u.timestamp).format('L') }}
+                                </td>
+                                {% endif %}
+                            </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- /.table-responsive -->
+                </div>
+                <!-- /.panel-body -->
+            </div>
+            <!-- /.panel -->
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+    <!-- end table list -->
+
+{% endblock wrapper %}
