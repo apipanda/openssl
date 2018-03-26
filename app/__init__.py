@@ -56,7 +56,7 @@ def create_app(app_name, config_obj):
 
     # register 'auth' blueprint
     from .views.auth import auth as auth_blueprint
-    factory.register_blueprint(auth_blueprint, url_prefix='/auth')
+    factory.register_blueprint(auth_blueprint)
 
     # register 'api' blueprint
     from .views.api import api as api_blueprint
