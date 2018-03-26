@@ -1,0 +1,4 @@
+NAMEKO_AMQP_URI: amqp://${RABBIT_USER:admin}:${RABBIT_PASSWORD:admin}@${RABBIT_HOST:localhost}:${RABBIT_PORT:5672}/
+
+REDIS_URIS:
+  default: redis://${REDIS_HOST:localhost}:${REDIS_PORT:6379}/{REDIS_INDEX:11}
