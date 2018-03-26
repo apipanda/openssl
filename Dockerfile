@@ -1,21 +1,31 @@
-FROM tianon/debian:wheezy
-MAINTAINER Bernard Ojengwa <bernardojengwa@gmail.com>
+FROM tiangolo/uwsgi-nginx:python3.6
 
-RUN echo 'Updating installed packages'
-RUN apt-get -y update && apt-get install curl -y
-
-RUN echo 'Setting environment variables'
-ENV SECRET_KEY=Bf8pGXxpQ4SAMU+guCFg4t6M1Wd/JLPDSzLVc5hR
-ENV PORT=5555
-ENV PY_ENV=production
+MAINTAINER Bernard Ojengwa <bernard@verifi.ng>
 
 
-RUN echo 'Install PIP'
-RUN curl https://bootstrap.pypa.io/get-pip.py | python $1
+RUN pip install flask
 
-WORKDIR /var/www/app
-COPY . 
 
-RUN echo 'Expose docker port'
-EXPOSE 5555
-EXPOSE 443
+ENV NGINX_MAX_UPLOAD 0
+ENV PYSPARK_PYTHON=python3
+ENV LISTEN_PORT 80
+ENV UWSGI_INI /var/sslme/.bin/uwsgi.ini
+ENV STATIC_URL /static
+ENV STATIC_PATH /var/sslme/static
+ENV STATIC_INDEX 0
+ENV PYTHONPATH=/var/sslme
+ENV FLASK_SETTINGS_MODULE=app.config.ProdConfig
+ENV NAMEKO_AMQP_URI=amqp:///
+ENV REDIS_URL=redis:///
+ENV MONGO_URI=mongodb:///
+ENV SSL_DISABLE=True
+
+COPY ./ /var/sslme
+RUN chmod +x /var/sslme/entrypoint.sh
+RUN chmod +x /var/sslme/run.sh
+
+WORKDIR /var/sslme
+RUN pip install -r requirements.txt
+
+ENTRYPOINT ["entrypoint.sh"]
+CMD ["run.sh"]
