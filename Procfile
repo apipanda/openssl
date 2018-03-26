@@ -1,1 +1,1 @@
-web: gunicorn openssl.wsgi --log-file -
+web: gunicorn manage:application --log-file -
