@@ -19,8 +19,3 @@ after_success:
 # Env variables
 env:
   - ENV=TEST
-
-# Slack
-notifications:
-  slack: apipanda:UNJdlVzsjpL85Aw6dys1hZZE
-
