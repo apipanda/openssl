@@ -1,0 +1,223 @@
+{% extends "base.html" %}
+{% block local_css %}
+<link rel="stylesheet" href="{{url_for('static', filename='plugins/datatables/css/jquery.datatables.min.css')}}">
+<link rel="stylesheet" href="{{url_for('static', filename='plugins/datatables/css/jquery.datatables_themeroller.css')}}">
+{% endblock local_css %}
+{% block pagetitle %}{% if enrollee and  enrollee.bvn %}
+    Search results for: <strong>{{enrollee.bvn}}</strong>
+{% else %}
+BVN Search:
+{% endif %}{% endblock pagetitle %}
+{% block content %}
+{% if enrollee and enrollee.bvn %}
+<div id="main-wrapper">
+    <div class="row">
+        <div class="col-lg-3 col-md-6">
+            <div class="panel panel-white stats-widget">
+                <div class="panel-body">
+                    <div class="pull-left">
+                        <span class="stats-number">{{total_accounts|default(1)}}</span>
+                        <p class="stats-info">Records Source(s)</p>
+                    </div>
+                    <div class="pull-right">
+                        <i class="icon-minus stats-icon"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6">
+            <div class="panel panel-white stats-widget">
+                <div class="panel-body">
+                    <div class="pull-left">
+                        <span class="stats-number">0</span>
+                        <p class="stats-info">Report Inquiries</p>
+                    </div>
+                    <div class="pull-right">
+                        <i class="icon-minus stats-icon"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6">
+            <div class="panel panel-white stats-widget">
+                <div class="panel-body">
+                    <div class="pull-left">
+                        <span class="stats-number">0%</span>
+                        <p class="stats-info">Credit Utilization</p>
+                    </div>
+                    <div class="pull-right">
+                        <i class="icon-minus stats-icon"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6">
+            <div class="panel panel-white stats-widget">
+                <div class="panel-body">
+                    <div class="pull-left">
+                        <span class="stats-number">0</span>
+                        <p class="stats-info">Missed Payments</p>
+                    </div>
+                    <div class="pull-right">
+                        <i class="icon-minus stats-icon"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-5">
+            <div class="panel panel-white">
+                <div class="panel-heading clearfix">
+                    <h4 class="panel-title">Enrolloee's Profile</h4>
+                </div>
+                <div class="panel-body user-profile-panel">
+                    <img src="http://via.placeholder.com/100x100" class="user-profile-image img-circle" alt="">
+                    <h4 class="text-center m-t-lg">{{enrollee.first_name|capitalize}} {{enrollee.last_name|capitalize}}</h4>
+                    <p class="text-center text-danger">Unverified Biometrics</p>
+                    <hr>
+                    <ul class="list-unstyled text-center">
+                        <li><p><i class="fa fa-{{enrollee.gender}} m-r-xs"></i>{{enrollee.gender|capitalize}}</p></li>
+                        <li><p><i class="fa fa-hourglass-half m-r-xs"></i>{{enrollee.dob}}</p></li>
+                        <li><p><i class="fa fa-calendar m-r-xs"></i> Enrolled {{enrollee.created_at}}</p></li>
+                    </ul>
+                    <hr>
+                    <button class="btn btn-default btn-block disabled"  disabled="disabled">Request Risk Score</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-7">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="panel panel-white">
+                        <div class="panel-heading clearfix">
+                            <h4 class="panel-title">Bucket/Score Influence</h4>
+                        </div>
+                        <div class="panel-body">
+                            <canvas id="chart3" style="min-height:380px"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="panel panel-white">
+                <div class="panel-body">
+                    <div class="panel-heading clearfix">
+                        <h4 class="panel-title">Risk Score History</h4>
+                    </div>
+                    <div id="flot2"><svg></svg></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="panel panel-white">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-md-7">
+                            <h4 class="panel-title">Bucket Insights: </h4>
+                        </div>
+                        <div class="col-md-5 pull-right">
+                            <div class="input-group">
+                                <select name="bucket_select" id="bucket_select" class="form-control" style="border-radius: 0px">
+                                    <option value="" disabled>Select Bucket and Click Refresh</option>
+                                    {% for bucket, value in enrollee.buckets.items() %}
+                                    <option value="{{bucket}}">{{bucket|replace("_", " ")|title}}</option>
+                                    {% endfor %}
+                                </select>
+                                <div class="input-group-btn">
+                                    <button type="button" class="btn btn-default" id="insight_button" onclick="getInsight();">Refresh <i class="fa fa-spinner fa-spin hide" id="spinner"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="table-responsive" id="insights_div">
+                        <table id="insights"></table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}
+{% block local_scripts %}
+{% if enrollee and enrollee.bvn %}
+<script src="{{ url_for('static', filename='plugins/datatables/js/jquery.datatables.min.js')
+}}"></script>
+<script type="text/javascript">
+    var initial_bucket = $('#bucket_select').val();
+    
+    function getInsight(event) {
+        $('#spinner').removeClass('hide');
+        $('#insight_button').attr('disabled', true);
+        let insights_table = $('#insights');
+        let bucket = $('#bucket_select').val();
+        toastr.options = {
+          "positionClass": "toast-bottom-right",
+        };
+        $.get({
+            data: {
+                bucket: bucket,
+                bvn: "{{enrollee.bvn}}"
+            },
+            url: "{{url_for('api.bucket_search')}}",
+            success: function (data) {
+                if (data.length) {
+                    var col = [];
+                    for (var i = 0; i < data.length; i++) {
+                        for (var key in data[i]) {
+                            if (col.indexOf(key) === -1) {
+                                col.push(key);
+                            }
+                        };
+                    };
+                    var table = document.createElement("table");
+
+                    table.id = 'insights';
+                    table.className = 'display table';
+                    table.style = 'width: 100%; cellspacing: 0;';
+                    var head = table.createTHead();
+                    var body = table.createTBody();
+                    var tr = head.insertRow(-1);
+                    for (var i = 0; i < col.length; i++) {
+                        var th = document.createElement("th");
+                        th.innerHTML = (col[i]).replace('_', ' ').toUpperCase();
+                        tr.appendChild(th);
+                    }
+                    for (var i = 0; i < data.length; i++) {
+
+                        tr = body.insertRow(-1);
+
+                        for (var j = 0; j < col.length; j++) {
+                            var tabCell = tr.insertCell(-1);
+                            tabCell.innerHTML = data[i][col[j]];
+                        }
+                    }
+                    var divContainer = document.getElementById("insights_div");
+                    divContainer.innerHTML = "";
+                    divContainer.appendChild(table);
+                    var insights = $('#insights');
+                    insights.DataTable();
+                } else {
+                    toastr["error"]("{{enrollee.bvn}} does not have records in this bucket.");
+                };
+                $('#spinner').addClass('hide');
+                $('#insight_button').attr('disabled', false);
+            },
+            error: function (error) {
+                toastr["error"]("An unknown error occured on the server.");
+            }
+        });
+    };
+
+    getInsight();
+</script>
+{% endif %}
+{% endblock local_scripts %}
