@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+{% block pagetitle %}Dashboard{% endblock pagetitle %}
+{% block content %}
+    <div id="main-wrapper">
+        <div class="row">
+            <div class="col-lg-3 col-md-6">
+                <div class="panel panel-white stats-widget">
+                    <div class="panel-body">
+                        <div class="pull-left">
+                            <span class="stats-number">{{total_records}}</span>
+                            <p class="stats-info">Total Records Ingested</p>
+                        </div>
+                        <div class="pull-right">
+                            <i class="icon-arrow_upward stats-icon"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="panel panel-white stats-widget">
+                    <div class="panel-body">
+                        <div class="pull-left">
+                            <span class="stats-number">0%</span>
+                            <p class="stats-info">Verified Biometrics</p>
+                        </div>
+                        <div class="pull-right">
+                            <i class="icon-minus stats-icon"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="panel panel-white stats-widget">
+                    <div class="panel-body">
+                        <div class="pull-left">
+                            <span class="stats-number">0</span>
+                            <p class="stats-info">Risk Score Requests</p>
+                        </div>
+                        <div class="pull-right">
+                            <i class="icon-minus stats-icon"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="panel panel-white stats-widget">
+                    <div class="panel-body">
+                        <div class="pull-left">
+                            <span class="stats-number">0</span>
+                            <p class="stats-info">Risk Scores Sent</p>
+                        </div>
+                        <div class="pull-right">
+                            <i class="icon-minus stats-icon"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 col-md-12">
+                <div class="panel panel-white">
+                    <div class="panel-heading clearfix">
+                        <h4 class="panel-title">Records Per Bucket</h4>
+                    </div>
+                    <div class="panel-body">
+                        <div style=""><canvas id="chart1"></canvas></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-white">
+                    <div class="panel-body">
+                        <div class="panel-heading clearfix">
+                            <h4 class="panel-title">Risk Score Request/Response Velocity</h4>
+                        </div>
+                        <div id="nvd3"><svg></svg></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 col-md-12">
+                <div class="panel panel-white">
+                    <div class="panel-heading clearfix">
+                        <h4 class="panel-title">Server Status</h4>
+                    </div>
+                    <div class="panel-body">
+                        <div class="container-fluid">
+                            <div class="server-load row">
+                                <div class="server-stat col-sm-4">
+                                    <p>1.43GB</p>
+                                    <span>Disk Usage</span>
+                                </div>
+                                <div class="server-stat col-sm-4">
+                                    <p>1.83GB</p>
+                                    <span>Traffic</span>
+                                </div>
+                                <div class="server-stat col-sm-4">
+                                    <p>68.3%</p>
+                                    <span>CPU</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="chart2"><svg></svg></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>           
+{% endblock %}
+
+
+{% block scripts %}
+{{ super() }}
+
+
+<script type="text/javascript">
+    window.records = {{counter|safe}};
+    window.record_labels = {{labels|safe}};
+    window.record_values = {{values|safe}};
+    window.buckets_count = {{counter|length}};
+</script>
+<script src="{{ url_for('static', filename='js/pages/dashboard.js') }}"></script>
+
+{% endblock scripts %}
