@@ -1,0 +1,87 @@
+version: 2
+jobs:
+  build:
+    docker:
+        working_directory: ~/sslme
+
+      - image: circleci/python:3.6.1
+        environment:
+            MODE: dev
+            ELASTICSEARCH_HOST: 127.0.0.1
+            ELASTICSEARCH_PORT: 9200
+            FLASK_CONFIG: testing
+      - image: rabbitmq:3.6.1-management
+        environment:
+            RABBITMQ_DEFAULT_USER: admin
+            RABBITMQ_DEFAULT_PASS: admin
+        ports:
+          - "8023:15672"
+          - "8024:5672"
+
+    steps:
+      - checkout
+
+      # Download and cache dependencies
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "requirements.txt" }}
+          # fallback to using the latest cache if no exact match is found
+          - v1-dependencies-
+
+      - run:
+          name: install dependencies
+          command: |
+            python3 -m venv venv
+            . venv/bin/activate
+            pip install -r requirements.txt
+
+      - save_cache:
+          paths:
+            - ./venv
+          key: v1-dependencies-{{ checksum "requirements.txt" }}
+        
+      - store_artifacts:
+          path: test-reports
+          destination: test-reports
+
+      - run: bash .circleci/heroku.sh
+      - add_ssh_keys:
+          fingerprints:
+            - "03:62:ea:5f:ec:34:35:74:28:fe:6a:4b:86:84:5b:af"
+      - deploy:
+          name: Deploy Master to Heroku
+          command: |
+            if [ "${CIRCLE_BRANCH}" == "staging" ]; then
+              git push heroku master
+              heroku run python manage.py deploy
+              heroku restart
+            fi
+  test:
+    docker:
+        working_directory: ~/sslme
+      - image: circleci/python:3.6.1
+    steps:
+      - checkout
+      - run:
+          name: run tests
+          command: |
+            . venv/bin/activate
+            echo 'success'
+      
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      - build
+      - test:
+          requires:
+            - build
+            
+deployment:
+    production:
+        branch: staging
+        commands:
+            - eval $(aws ecr get-login --region us-west-2 | sed 's|https://||')
+            - docker build -t registry-sslme .
+            - docker tag registry-sslme:latest $ECR_REPO:latest
+            - docker push $ECR_REPO:latest
