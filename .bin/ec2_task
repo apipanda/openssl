@@ -1,0 +1,5 @@
+#!/bin/zsh
+
+pyenv global 3.6.2 && cat docker-compose.yml| container-transform | cat $1 >> './.ecs/definitions.json'
+
+pyenv global system
