@@ -1,0 +1,116 @@
+{% extends "layouts/frontend.html" %}
+{% block pagetitle %}Dashboard{% endblock pagetitle %}
+
+{% block body %}
+<header id="hero" class="hero overlay">
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="fa fa-bars"></span>
+                </button>
+                <a href="/" class="brand">
+                    <img src="/assets/images/logo.png" alt="sslme.io">
+                </a>
+            </div>
+            <div class="navbar-collapse collapse" id="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/#hero">
+                            Home
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/#about">
+                            Learn
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/#contact">
+                            Contact
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/login">
+                            Login
+                        </a>
+                    </li>
+                    <li>
+                         <a href="" class="btn btn-warning nav-btn">Donate</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="masthead text-center">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2">
+                    <p class="lead text-muted">Get Free, unlimited SSL certificates for your websites, instantly. No strings attached.</p>
+                    <form method="post">
+                        <input type="text" class="search-field" placeholder="Enter your domain name to get started... "/>
+                        <button type="submit"><i class="fa fa-search"></i></button>
+                    </form>
+                    <a href="https://github.com/ojengwa/sslme" class="btn btn-hero" target="_blank"><span class="icon-git"></span> Github Project<span class="icon-right"></span></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<section id="about" class="features bgc-light-gray">
+    <div class="container ">
+        <header class="text-center">
+            <h2 class="section-title">About Project</h2>
+            <p class="section-subtitle"><a href="https://github.com/apipanda/openssl" target="_blank"><code>sslme.io</code></a> is a <a href="http://www.freeopensourcesoftware.org/index.php" target="_blank"><code>free and open source</code></a> <a href="https://letsencrypt.github.io/acme-spec/" target="_blank"><code>ACME Protocol</code></a> web client for generating <strong>trusted</strong> <a href="https://en.wikipedia.org/wiki/Public_key_infrastructure" target="_blank"><code>WEB PKI Certificates</code></a> using the <a href="https://letsencrypt.org/" target="_blank"><code>Let's Encrypt certificate authority</code></a>. <a href="https://letsencrypt.org/about/" target="_blank"><code>Let’s Encrypt</code></a> is a free, automated, and open certificate authority (CA), run for the public’s benefit. </p>
+        </header>
+        <div class="row features-section">
+            <div class="text-center col-sm-4">
+                <div class="media-body">
+                    <span class="icon"><i class="fa fa-dollar"></i></span>
+                    <h3>Free</h3>
+                    <p class="text-muted">Anyone who owns a domain name can use Let’s Encrypt to obtain a trusted certificate at zero cost.</p>
+                </div>
+            </div>
+            <div class="text-center col-sm-4">
+                <div class="media-body">
+                    <span class="icon"><i class="fa fa-lock"></i></span>
+                    <h3>Secure</h3>
+                    <p class="text-muted">Let’s Encrypt will serve as a platform for advancing TLS security best practices, both on the CA side and by helping site operators properly secure their servers.</p>
+                </div>
+            </div>
+            <div class="text-center col-sm-4">
+                <div class="media-body">
+                    <span class="icon"><i class="fa fa-search"></i></span>
+                    <h3>Transperancy</h3>
+                    <p>The source code is available on GitHub, you can grab it and twist it to your heart’s content</p>
+                </div>
+            </div>
+        </div>
+        <div class="row features-section">
+            <div class="text-center col-sm-4">
+                <div class="media-body">
+                    <span class="icon"><i class="fa fa-code"></i></span>
+                    <h3>Open</h3>
+                    <p class="text-muted"><a href="https://letsencrypt.org/" target="_blank"><code>Let's Encrypt</code></a> is <strong>OPEN</strong>. The automatic issuance and renewal protocol will be published as an open standard that others can adopt.</p>
+                </div>
+            </div>
+            <div class="text-center col-sm-4">
+                <div class="media-body">
+                    <span class="icon"><i class="fa fa-users"></i></span>
+                    <h3>Cooperative</h3>
+                    <p class="text-muted">Much like the underlying Internet protocols themselves, Let’s Encrypt is a joint effort to benefit the community, beyond the control of any one organization.</p>
+                </div>
+            </div>
+            <div class="text-center col-sm-4">
+                <div class="media-body">
+                    <span class="icon"><i class="fa fa-repeat"></i></span>
+                    <h3>Auto-renewal</h3>
+                    <p>Your SSL certificates are auto-renewed for you so you don't have to worry about contantly keeping your <code>certificate</code>.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
