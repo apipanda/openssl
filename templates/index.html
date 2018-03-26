@@ -1,0 +1,88 @@
+{% extends "layouts/frontend.html" %}
+{% block pagetitle %}Dashboard{% endblock pagetitle %}
+
+{% block body %}
+<header id="hero" class="hero overlay">
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="fa fa-bars"></span>
+                </button>
+                <a href="/" class="brand">
+                    <img src="/assets/images/logo.png" alt="sslme.io">
+                </a>
+            </div>
+            <div class="navbar-collapse collapse" id="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/#hero">
+                            Home
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/#about">
+                            Learn
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/#contact">
+                            Contact
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/login">
+                            Login
+                        </a>
+                    </li>
+                    <li>
+                         <a href="" class="btn btn-warning nav-btn">Donate</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="masthead">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2">
+                    <h1>Welcome Back</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<section class="card-section">
+    <div class="container">
+        <div class="col-lg-8 col-lg-offset-2">
+            <div class="card text-center">
+
+                <header class="text-center">
+                    <h2 class="section-title">SignIn Now</h2>
+                    <div class="section-subtitle">Join Our wonderful community and let others help you without a single penny</div>
+                </header>
+                <div class="icon">
+                <img src="assets/images/icon/icon-login.png" alt=""/>
+                </div>
+
+                <form>
+                    <div class="row">
+                        <div class="col-md-6">   <input type="text" class="search-field" placeholder="Email Address"/></div>
+                        <div class="col-md-6">   <input type="text" class="search-field" placeholder="Password"/></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <input type="submit" class="btn btn-success" value="Let me enter">
+                            <p class="forget-pass">Have you forgot your username or password ? </p>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+
+        </div>
+    </div>
+</section>
+{% endblock %}
