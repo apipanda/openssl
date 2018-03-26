@@ -1,0 +1,90 @@
+<div class="page-sidebar bs-dark">
+    <a class="logo-box" href="/">
+        <span class="navbar-logo"><img src="{{ url_for('static', filename='images/verifi.png') }}" alt="" style="max-height: 34px"></span>
+        <i class="icon-close" id="sidebar-toggle-button-close"></i>
+    </a>
+    <div class="page-sidebar-inner">
+        <div class="page-sidebar-menu">
+            <ul class="accordion-menu">
+                <li class="active-page">
+                    <a href="{{url_for('main.dashboard')}}">
+                        <i class="menu-icon icon-home4"></i><span>Dashboard</span> 
+                    </a>
+                </li>
+                <li>
+                    <a href="{{url_for('main.search')}}">
+                        <i class="menu-icon 
+                        icon-search"></i><span>Search Engine</span> 
+                    </a>
+                </li>
+                <li class="menu-divider"></li>
+                <li>
+                    <a href="javascript:void(0);">
+                        <i class="menu-icon icon-database"></i><span>Buckets</span><i class="accordion-icon fa fa-angle-left"></i>
+                    </a>
+                    <ul class="sub-menu">
+                        {% for bucket, value in buckets.items() %}
+                        <li><a href="#">{{bucket}}</a></li>
+                        {% endfor %}
+                    </ul>
+                </li>
+                <li>
+                    <a href="javascript:void(0);">
+                        <i class="menu-icon icon-cogs"></i><span>Security</span><i class="accordion-icon fa fa-angle-left"></i>
+                    </a>
+                    <ul class="sub-menu">
+                        <li><a href="#">Users</a></li>
+                        <li><a href="#">Roles</a></li>
+                        <li><a href="#">Permissions</a></li>
+                        <li><a href="#">Partners</a></li>
+                        <li><a href="#">Statistics</a></li>
+                        <li class="menu-divider"></li>
+                        <li><a href="#">Access Requests</a></li>
+                        <li><a href="#">Action Logs</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="javascript:void(0);">
+                        <i class="menu-icon icon-wrench"></i><span>Manage</span><i class="accordion-icon fa fa-angle-left"></i>
+                    </a>
+                    <ul class="sub-menu">
+                        <li><a href="#">Queries</a></li>
+                        <li><a href="#">Annotations</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="javascript:void(0);">
+                        <i class="menu-icon icon-tree"></i><span>BI Lab</span><i class="accordion-icon fa fa-angle-left"></i>
+                    </a>
+                    <ul class="sub-menu">
+                        <li><a href="#">Query Editor</a></li>
+                        <li><a href="#">Query Search</a></li>
+                        <li><a href="#">Saved Queries</a></li>
+                    </ul>
+                </li>
+                <li class="menu-divider"></li>
+                <li>
+                    <a href="">
+                        <i class="menu-icon icon-message"></i><span>Messages</span>
+                    </a>
+                </li>
+                <li class="menu-divider"></li>
+                <li>
+                    <a href="">
+                        <i class="menu-icon icon-command"></i><span>Service Manager</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="">
+                        <i class="menu-icon icon-aid-kit"></i><span>Error Manager</span><span class="label label-danger">4</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="">
+                        <i class="menu-icon icon-terminal"></i><span>Console</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
